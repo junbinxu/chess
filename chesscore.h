@@ -9,6 +9,7 @@ class ChessCore : public QObject
     Q_DISABLE_COPY(ChessCore)
 public:
     static ChessCore *instance();
+    ~ChessCore();
 
 signals:
 

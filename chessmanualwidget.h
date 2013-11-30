@@ -9,6 +9,7 @@ class ChessManualWidget : public QWidget
     Q_DISABLE_COPY(ChessManualWidget)
 public:
     static ChessManualWidget *instance();
+    ~ChessManualWidget();
 
 signals:
 

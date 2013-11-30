@@ -15,6 +15,7 @@ class ChessCenterWidget : public QWidget
     Q_DISABLE_COPY(ChessCenterWidget)
 public:
     static ChessCenterWidget *instance();
+    ~ChessCenterWidget();
 
 signals:
 

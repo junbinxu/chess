@@ -8,6 +8,7 @@ class ChessInformation
     Q_DISABLE_COPY(ChessInformation)
 public:
     static ChessInformation *instance();
+    ~ChessInformation();
     void init(ChessType ct, ChessColor cc, QString ip, quint16 port);
     inline bool isRed() const {return RedColor == chessColor;}
     inline bool isBlack() const {return BlackColor == chessColor;}

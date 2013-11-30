@@ -1,4 +1,6 @@
 #include "chessrule.h"
+#include "chesslog.h"
+#include <QObject>
 
 ChessRule * ChessRule::INSTANCE = 0;
 
@@ -13,4 +15,11 @@ ChessRule * ChessRule::instance()
 
 ChessRule::ChessRule()
 {
+
+    Chess_Trace(QObject::tr("new ChessRule"));
+}
+
+ChessRule::~ChessRule()
+{
+    Chess_Trace(QObject::tr("delete ChessRule"));
 }

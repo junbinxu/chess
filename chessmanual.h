@@ -14,10 +14,11 @@ class ChessManual : public QObject
     Q_DISABLE_COPY(ChessManual)
 public:
     static ChessManual *instance();
+    ~ChessManual();
     void saveChessManual();
 
 private:
-    explicit ChessManual();
+    explicit ChessManual(QObject *parent = 0);
     static ChessManual *INSTANCE;
 
     QList<QString> manual;

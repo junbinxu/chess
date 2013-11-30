@@ -17,9 +17,15 @@ ChessManual * ChessManual::instance()
     return INSTANCE;
 }
 
-ChessManual::ChessManual()
+ChessManual::ChessManual(QObject *parent) : QObject(parent)
 {
 
+    Chess_Trace(tr("new ChessManual"));
+}
+
+ChessManual::~ChessManual()
+{
+    Chess_Trace(tr("delete ChessManual"));
 }
 
 void ChessManual::saveChessManual()

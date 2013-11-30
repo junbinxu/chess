@@ -1,4 +1,6 @@
 #include "chessdata.h"
+#include "chesslog.h"
+#include <QObject>
 
 ChessData * ChessData::INSTANCE = 0;
 
@@ -13,4 +15,11 @@ ChessData * ChessData::instance()
 
 ChessData::ChessData()
 {
+
+    Chess_Trace(QObject::tr("new ChessData"));
+}
+
+ChessData::~ChessData()
+{
+    Chess_Trace(QObject::tr("delete ChessData"));
 }

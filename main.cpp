@@ -1,7 +1,7 @@
 #include "chessdefine.h"
 #include "chesssetting.h"
 #include "chesslog.h"
-#include "chess.h"
+#include "chessselectionwidget.h"
 #include <QApplication>
 
 
@@ -13,14 +13,16 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QObject::tr("example"));
     app.setOrganizationDomain(QLatin1String("www.example.com"));
 
-    Chess_Info(QObject::tr("start chess program"));
+    Q_INIT_RESOURCE(chess);
 
-    Chess_Info(QObject::tr("red configure file: chess.ini"));
+    Chess_Info(QObject::tr("start Chinese Chess program"));
+
+    Chess_Info(QObject::tr("start read configure file: chess.ini"));
     ChessSetting::instance()->readSetting();    //读取配置文件
+    Chess_Info(QObject::tr("end read configure file: chess.ini"));
 
-    Chess chess;
-    Chess_Info(QObject::tr("init main gui"));
-    chess.show();
+    ChessSelectionWidget sw;
+    sw.show();
 
     return app.exec();
 }

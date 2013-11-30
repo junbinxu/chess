@@ -1,4 +1,5 @@
 #include "chesssetting.h"
+#include "chesslog.h"
 #include <QSettings>
 #include <QCoreApplication>
 
@@ -16,6 +17,13 @@ ChessSetting * ChessSetting::instance()
 ChessSetting::ChessSetting()
 {
     iniFileName = QCoreApplication::applicationDirPath() + QLatin1String("/chess.ini");
+
+    Chess_Trace(QObject::tr("new ChessSetting"));
+}
+
+ChessSetting::~ChessSetting()
+{
+    Chess_Trace(QObject::tr("delete ChessSetting"));
 }
 
 QString ChessSetting::get(const QString &key) const

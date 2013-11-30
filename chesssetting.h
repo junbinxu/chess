@@ -8,6 +8,7 @@ class ChessSetting
     Q_DISABLE_COPY(ChessSetting)
 public:
     static ChessSetting *instance();
+    ~ChessSetting();
     QString get(const QString &key) const;
     void set(const QString &key, const QString &value);
     void saveSetting();

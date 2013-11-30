@@ -15,6 +15,7 @@ class ChessChatWidget : public QWidget
     Q_DISABLE_COPY(ChessChatWidget)
 public:
     static ChessChatWidget *instance();
+    ~ChessChatWidget();
 
 signals:
     void send(const QString &msg);

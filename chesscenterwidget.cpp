@@ -4,6 +4,7 @@
 #include "chessboardwidget.h"
 #include "chesstipswidget.h"
 #include "chesschatwidget.h"
+#include "chesslog.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -40,4 +41,11 @@ ChessCenterWidget::ChessCenterWidget(QWidget *parent) :
     layout->addLayout(rightLayout);
 
     setLayout(layout);
+
+    Chess_Trace(tr("new ChessCenterWidget"));
+}
+
+ChessCenterWidget::~ChessCenterWidget()
+{
+    Chess_Trace(tr("delete ChessCenterWidget"));
 }

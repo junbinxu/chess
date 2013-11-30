@@ -39,7 +39,12 @@ ChessChatWidget::ChessChatWidget(QWidget *parent) :
 
     connect(sendPushButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
 
-    Chess_Info(QObject::tr("init module: chat"));
+    Chess_Trace(tr("new ChessChatWidget"));
+}
+
+ChessChatWidget::~ChessChatWidget()
+{
+    Chess_Trace(tr("delete ChessChatWidget"));
 }
 
 void ChessChatWidget::sendMessage()

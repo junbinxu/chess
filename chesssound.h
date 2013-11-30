@@ -5,6 +5,7 @@ class ChessSound
 {
 public:
     static ChessSound *instance();
+    ~ChessSound();
 
 private:
     static ChessSound *INSTANCE;

@@ -8,6 +8,7 @@ class ChessRule
     Q_DISABLE_COPY(ChessRule)
 public:
     static ChessRule *instance();
+    ~ChessRule();
 
 private:
     static ChessRule *INSTANCE;
