@@ -2,8 +2,7 @@
 #define CHESSMANUAL_H
 
 #include "chessdefine.h"
-#include <QString>
-#include <QHash>
+#include <QList>
 
 QT_BEGIN_NAMESPACE
 

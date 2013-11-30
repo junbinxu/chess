@@ -2,7 +2,6 @@
 #define CHESSINFORMATION_H
 
 #include "chessdefine.h"
-#include <QString>
 
 class ChessInformation
 {

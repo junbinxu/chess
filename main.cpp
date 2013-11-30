@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QWidget>
+#include <QThread>
 
 int main(int argc, char *argv[])
 {
@@ -14,13 +15,14 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QObject::tr("example"));
     app.setOrganizationDomain(QLatin1String("www.example.com"));
 
-    //读取配置文件
-    ChessSetting::instance()->readSetting();
+    Chess_Info(QObject::tr("start chess program"));
 
-    Chess_Debug("fdsfads");
+    Chess_Info(QObject::tr("red configure file: chess.ini"));
+    ChessSetting::instance()->readSetting();    //读取配置文件
 
-    QWidget w;
-    w.show();
+    Chess_Info(QObject::tr("init main gui"));
+
+    ChessChat::instance()->show();
 
     return app.exec();
 }

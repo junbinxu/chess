@@ -1,4 +1,5 @@
 #include "chesschat.h"
+#include "chesslog.h"
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
@@ -37,6 +38,8 @@ ChessChat::ChessChat(QWidget *parent) :
     setLayout(layout);
 
     connect(sendPushButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+
+    Chess_Info(QObject::tr("init module: chat"));
 }
 
 void ChessChat::sendMessage()
@@ -45,13 +48,19 @@ void ChessChat::sendMessage()
     if(message.isEmpty()) return;
     emit send(message);
     inputLineEdit->clear();
+    showMessage(true, message);
 }
 
 void ChessChat::receiveMessage(const QString &msg)
 {
+    showMessage(false, msg);
+}
+
+void ChessChat::showMessage(bool isMe, const QString &msg)
+{
     QDateTime dateTime = QDateTime::currentDateTime();
     QString currentTime = dateTime.toString(QLatin1String("yyyy-MM-dd HH:mm:ss"));
-
-    QString message = currentTime + msg;
+    QString speaker = isMe ? tr("myself") : tr("other");
+    QString message = QString("%1 [%2]\n%3").arg(currentTime).arg(speaker).arg(msg);
     showTextEdit->append(message);
 }

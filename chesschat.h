@@ -25,6 +25,8 @@ public slots:
     void receiveMessage(const QString &msg);
 
 private:
+    void showMessage(bool isMe, const QString &msg);
+
     const static int maxLength;
 
     QLineEdit *inputLineEdit;

@@ -3,7 +3,6 @@
 
 #include <QtGlobal>
 #include <QString>
-#include <QDebug>
 
 //(major << 16) + (minor << 8) + patch
 #define CHESS_VERSION_STR "1.0.0"

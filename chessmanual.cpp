@@ -1,5 +1,6 @@
 #include "chessmanual.h"
 #include "chessinformation.h"
+#include "chesslog.h"
 #include <QXmlStreamWriter>
 #include <QXmlStreamWriter>
 #include <QFile>
@@ -35,14 +36,12 @@ void ChessManual::saveChessManual()
     QFile file(fileName);
     if(!file.open(QIODevice::Text | QIODevice::WriteOnly))
     {
-        qDebug() << "can not open the file to save manual";
+        Chess_Warning(QObject::tr("can not save chess manual"));
         return;
     }
     int size = manual.size();
     writer.setDevice(&file);
-    qDebug() << writer.hasError();
     writer.writeStartDocument();                        //doc begin
-    qDebug() << writer.hasError();
 
     writer.writeStartElement(QLatin1String("chess"));   //chess begin
     writer.writeAttribute(QLatin1String("version_str"),
@@ -69,6 +68,7 @@ void ChessManual::saveChessManual()
 
 void ChessManual::writeSetup(int i)
 {
+    Q_UNUSED(i);
     //writer.writeStartElement(QLatin1String("setup"));
     //writer.writeAttribute(QLatin1String("id"), QString::number(i));
     //writer.writeEndElement();
