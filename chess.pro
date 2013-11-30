@@ -7,23 +7,23 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    chesschat.cpp \
     chessmanual.cpp \
     chesssetting.cpp \
     chessinformation.cpp \
     chesslog.cpp \
     chess.cpp \
-    chesscenterwidget.cpp
+    chesscenterwidget.cpp \
+    chesschatwidget.cpp
 
 HEADERS += \
-    chesschat.h \
     chessdefine.h \
     chessmanual.h \
     chesssetting.h \
     chessinformation.h \
     chesslog.h \
     chess.h \
-    chesscenterwidget.h
+    chesscenterwidget.h \
+    chesschatwidget.h
 
 RESOURCES += \
     chess.qrc

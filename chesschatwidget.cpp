@@ -1,4 +1,4 @@
-#include "chesschat.h"
+#include "chesschatwidget.h"
 #include "chesslog.h"
 #include <QLineEdit>
 #include <QTextEdit>
@@ -7,20 +7,20 @@
 #include <QVBoxLayout>
 #include <QDateTime>
 
-ChessChat * ChessChat::INSTANCE = 0;
+ChessChatWidget * ChessChatWidget::INSTANCE = 0;
 
-ChessChat * ChessChat::instance()
+ChessChatWidget * ChessChatWidget::instance()
 {
     if(!INSTANCE)
     {
-        INSTANCE = new ChessChat;
+        INSTANCE = new ChessChatWidget;
     }
     return INSTANCE;
 }
 
-const int ChessChat::maxLength = 20;
+const int ChessChatWidget::maxLength = 20;
 
-ChessChat::ChessChat(QWidget *parent) :
+ChessChatWidget::ChessChatWidget(QWidget *parent) :
     QWidget(parent)
 {
     inputLineEdit = new QLineEdit;
@@ -42,7 +42,7 @@ ChessChat::ChessChat(QWidget *parent) :
     Chess_Info(QObject::tr("init module: chat"));
 }
 
-void ChessChat::sendMessage()
+void ChessChatWidget::sendMessage()
 {
     QString message = inputLineEdit->text().trimmed();
     if(message.isEmpty()) return;
@@ -51,12 +51,12 @@ void ChessChat::sendMessage()
     showMessage(true, message);
 }
 
-void ChessChat::receiveMessage(const QString &msg)
+void ChessChatWidget::receiveMessage(const QString &msg)
 {
     showMessage(false, msg);
 }
 
-void ChessChat::showMessage(bool isMe, const QString &msg)
+void ChessChatWidget::showMessage(bool isMe, const QString &msg)
 {
     QDateTime dateTime = QDateTime::currentDateTime();
     QString currentTime = dateTime.toString(QLatin1String("yyyy-MM-dd HH:mm:ss"));

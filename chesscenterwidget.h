@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class ChessChat;
+class ChessChatWidget;
 
 class ChessCenterWidget : public QWidget
 {
@@ -20,7 +20,7 @@ private:
     static ChessCenterWidget *INSTANCE;
     explicit ChessCenterWidget(QWidget *parent = 0);
 
-    ChessChat *chessChat;
+    ChessChatWidget *chessChatWidget;
 };
 
 #endif // CHESSCENTERWIDGET_H

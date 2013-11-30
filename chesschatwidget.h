@@ -1,5 +1,5 @@
-#ifndef CHESSCHAT_H
-#define CHESSCHAT_H
+#ifndef CHESSCHATWIDGET_H
+#define CHESSCHATWIDGET_H
 
 #include "chessdefine.h"
 #include <QWidget>
@@ -10,12 +10,12 @@ class QPushButton;
 class QTextEdit;
 QT_END_NAMESPACE
 
-class ChessChat : public QWidget
+class ChessChatWidget : public QWidget
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ChessChat)
+    Q_DISABLE_COPY(ChessChatWidget)
 public:
-    static ChessChat *instance();
+    static ChessChatWidget *instance();
 
 signals:
     void send(const QString &msg);
@@ -33,9 +33,9 @@ private:
     QTextEdit *showTextEdit;
     QPushButton *sendPushButton;
 
-    static ChessChat *INSTANCE;
+    static ChessChatWidget *INSTANCE;
 
-    explicit ChessChat(QWidget *parent = 0);
+    explicit ChessChatWidget(QWidget *parent = 0);
 };
 
-#endif // CHESSCHAT_H
+#endif // ChessChatWidget_H

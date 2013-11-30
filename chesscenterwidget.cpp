@@ -1,5 +1,5 @@
 #include "chesscenterwidget.h"
-#include "chesschat.h"
+#include "chesschatwidget.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -16,9 +16,9 @@ ChessCenterWidget * ChessCenterWidget::instance()
 ChessCenterWidget::ChessCenterWidget(QWidget *parent) :
     QWidget(parent)
 {
-    chessChat = ChessChat::instance();
+    chessChatWidget = ChessChatWidget::instance();
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
-    rightLayout->addWidget(chessChat);
+    rightLayout->addWidget(chessChatWidget);
     setLayout(rightLayout);
 }
