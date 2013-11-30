@@ -1,3 +1,4 @@
+#include "chessdefine.h"
 #include "chesssetting.h"
 #include "chesslog.h"
 #include "chess.h"

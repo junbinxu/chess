@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+class ChessManualWidget;
+class ChessFunctionWidget;
+class ChessBoardWidget;
+class ChessTipsWidget;
 class ChessChatWidget;
 
 class ChessCenterWidget : public QWidget
@@ -20,6 +24,10 @@ private:
     static ChessCenterWidget *INSTANCE;
     explicit ChessCenterWidget(QWidget *parent = 0);
 
+    ChessManualWidget *chessManualWidget;
+    ChessFunctionWidget *chessFunctionWidget;
+    ChessBoardWidget *chessBoardWidget;
+    ChessTipsWidget *chessTipsWidget;
     ChessChatWidget *chessChatWidget;
 };
 

@@ -1,11 +1,11 @@
 #ifndef CHESSSETTING_H
 #define CHESSSETTING_H
 
-#include "chessdefine.h"
 #include <QHash>
 
 class ChessSetting
 {
+    Q_DISABLE_COPY(ChessSetting)
 public:
     static ChessSetting *instance();
     QString get(const QString &key) const;

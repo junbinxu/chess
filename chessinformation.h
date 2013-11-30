@@ -5,6 +5,7 @@
 
 class ChessInformation
 {
+    Q_DISABLE_COPY(ChessInformation)
 public:
     static ChessInformation *instance();
     void init(ChessType ct, ChessColor cc, QString ip, quint16 port);

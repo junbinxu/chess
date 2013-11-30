@@ -1,7 +1,6 @@
 #ifndef CHESSCHATWIDGET_H
 #define CHESSCHATWIDGET_H
 
-#include "chessdefine.h"
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
