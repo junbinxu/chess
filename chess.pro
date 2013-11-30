@@ -11,7 +11,9 @@ SOURCES += \
     chessmanual.cpp \
     chesssetting.cpp \
     chessinformation.cpp \
-    chesslog.cpp
+    chesslog.cpp \
+    chess.cpp \
+    chesscenterwidget.cpp
 
 HEADERS += \
     chesschat.h \
@@ -19,7 +21,9 @@ HEADERS += \
     chessmanual.h \
     chesssetting.h \
     chessinformation.h \
-    chesslog.h
+    chesslog.h \
+    chess.h \
+    chesscenterwidget.h
 
 RESOURCES += \
     chess.qrc

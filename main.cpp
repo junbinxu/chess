@@ -1,11 +1,8 @@
-#include "chesschat.h"
-#include "chessmanual.h"
 #include "chesssetting.h"
 #include "chesslog.h"
+#include "chess.h"
 #include <QApplication>
-#include <QDebug>
-#include <QWidget>
-#include <QThread>
+
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +17,9 @@ int main(int argc, char *argv[])
     Chess_Info(QObject::tr("red configure file: chess.ini"));
     ChessSetting::instance()->readSetting();    //读取配置文件
 
+    Chess chess;
     Chess_Info(QObject::tr("init main gui"));
-
-    ChessChat::instance()->show();
+    chess.show();
 
     return app.exec();
 }
