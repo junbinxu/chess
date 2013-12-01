@@ -23,6 +23,14 @@ enum LogLevel
 };
 
 //
+enum TipsLevel
+{
+    NormalLevel = 0,
+    ImportantLevel,
+    SeriousLevel
+};
+
+//
 enum  ChessType
 {
     ServerType = 1,
