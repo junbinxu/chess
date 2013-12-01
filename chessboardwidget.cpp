@@ -1,5 +1,8 @@
 #include "chessboardwidget.h"
 #include "chesslog.h"
+#include <QPainter>
+#include <QPaintEvent>
+#include <QMouseEvent>
 
 ChessBoardWidget * ChessBoardWidget::INSTANCE = 0;
 
@@ -22,4 +25,24 @@ ChessBoardWidget::ChessBoardWidget(QWidget *parent) :
 ChessBoardWidget::~ChessBoardWidget()
 {
     Chess_Trace(tr("delete ChessBoardWidget"));
+}
+
+void ChessBoardWidget::paintEvent(QPaintEvent *)
+{
+
+}
+
+void ChessBoardWidget::mousePressEvent(QMouseEvent *event)
+{
+
+}
+
+void ChessBoardWidget::mouseMoveEvent(QMouseEvent *event)
+{
+
+}
+
+void ChessBoardWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+
 }

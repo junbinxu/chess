@@ -7,6 +7,7 @@ QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QPushButton;
 class QTextEdit;
+class QLabel;
 QT_END_NAMESPACE
 
 class ChessChatWidget : public QWidget
@@ -16,6 +17,9 @@ class ChessChatWidget : public QWidget
 public:
     static ChessChatWidget *instance();
     ~ChessChatWidget();
+
+protected:
+    void keyPressEvent(QKeyEvent *e);
 
 signals:
     void send(const QString &msg);
@@ -29,6 +33,7 @@ private:
 
     const static int maxLength;
 
+    QLabel *titleLabel;
     QLineEdit *inputLineEdit;
     QTextEdit *showTextEdit;
     QPushButton *sendPushButton;

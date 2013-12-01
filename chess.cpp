@@ -9,6 +9,11 @@
 #include "chessrule.h"
 #include "chessmanual.h"
 #include "chessdispatch.h"
+#include "chessprotocol.h"
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QAction>
 
 Chess * Chess::INSTANCE = 0;
 
@@ -26,6 +31,8 @@ Chess::Chess(QWidget *parent) :
 {
     init();
 
+    initMenuBar();
+    initToolBar();
     setCentralWidget(ChessCenterWidget::instance());
 
 
@@ -36,6 +43,7 @@ Chess::Chess(QWidget *parent) :
 Chess::~Chess()
 {
     delete ChessSound::instance();
+    delete ChessProtocol::instance();
     delete ChessManual::instance();
     delete ChessRule::instance();
     delete ChessData::instance();
@@ -51,8 +59,26 @@ void Chess::init()
 {
     ChessData::instance();
     ChessRule::instance();
+    ChessProtocol::instance();
     ChessSound::instance();
     ChessManual::instance();
     ChessDispatch::instance();
     ChessCore::instance();
+}
+
+void Chess::initMenuBar()
+{
+    helpMenu = new QMenu(tr("&Help"), this);
+    aboutQtAction = new QAction(tr("about qt"), 0);
+    helpMenu->addAction(aboutQtAction);
+    aboutChineseChessAction = new QAction(tr("about this"), 0);
+    helpMenu->addAction(aboutChineseChessAction);
+
+    QMenuBar *mb = menuBar();
+    mb->addMenu(helpMenu);
+}
+
+void Chess::initToolBar()
+{
+
 }

@@ -3,6 +3,12 @@
 
 #include <QMainWindow>
 
+QT_BEGIN_NAMESPACE
+class QMenu;
+class QToolBar;
+class QAction;
+QT_END_NAMESPACE
+
 class Chess : public QMainWindow
 {
     Q_OBJECT
@@ -20,6 +26,13 @@ private:
     explicit Chess(QWidget *parent = 0);
 
     void init();
+    void initMenuBar();
+    void initToolBar();
+
+    QAction *aboutQtAction;
+    QAction *aboutChineseChessAction;
+
+    QMenu *helpMenu;
 };
 
 #endif // CHESS_H
