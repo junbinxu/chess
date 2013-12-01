@@ -10,8 +10,9 @@ QT_END_NAMESPACE
 class ChessClient : public ChessOpposition
 {
     Q_OBJECT
+    Q_DISABLE_COPY(ChessClient)
 public:
-    explicit ChessClient(QObject *parent = 0);
+    static ChessClient *instance();
     ~ChessClient();
     bool isValid();
     void send(const QString &message);
@@ -19,8 +20,12 @@ public:
 signals:
 
 public slots:
+    void read();
 
 private:
+    static ChessClient *INSTANCE;
+    explicit ChessClient(QObject *parent = 0);
+
     QTcpSocket *socket;
 };
 

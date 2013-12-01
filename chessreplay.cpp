@@ -1,6 +1,17 @@
 #include "chessreplay.h"
 #include "chesslog.h"
 
+ChessReplay * ChessReplay::INSTANCE = 0;
+
+ChessReplay * ChessReplay::instance()
+{
+    if(!INSTANCE)
+    {
+        INSTANCE = new ChessReplay;
+    }
+    return INSTANCE;
+}
+
 ChessReplay::ChessReplay(QObject *parent) :
     ChessOpposition(parent)
 {

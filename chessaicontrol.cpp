@@ -1,6 +1,17 @@
 #include "chessaicontrol.h"
 #include "chesslog.h"
 
+ChessAIControl * ChessAIControl::INSTANCE = 0;
+
+ChessAIControl * ChessAIControl::instance()
+{
+    if(!INSTANCE)
+    {
+        INSTANCE = new ChessAIControl;
+    }
+    return INSTANCE;
+}
+
 ChessAIControl::ChessAIControl(QObject *parent) :
     ChessOpposition(parent)
 {

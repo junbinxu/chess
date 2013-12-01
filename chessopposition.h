@@ -8,9 +8,9 @@ class ChessOpposition : public QObject
     Q_OBJECT
 public:
     explicit ChessOpposition(QObject *parent = 0);
-    ~ChessOpposition();
+    virtual ~ChessOpposition();
     virtual bool isValid();
-    virtual void send(const QString &);
+    virtual void send(const QString &) = 0;
     void receive(const QString &message);
 
 signals:

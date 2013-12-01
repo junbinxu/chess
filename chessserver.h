@@ -11,8 +11,9 @@ QT_END_NAMESPACE
 class ChessServer : public ChessOpposition
 {
     Q_OBJECT
+    Q_DISABLE_COPY(ChessServer)
 public:
-    explicit ChessServer(QObject *parent = 0);
+    static ChessServer *instance();
     ~ChessServer();
     bool isValid();
     void send(const QString &message);
@@ -20,8 +21,13 @@ public:
 signals:
 
 public slots:
+    void read();
+    void newConnect();
 
 private:
+    static ChessServer *INSTANCE;
+    explicit ChessServer(QObject *parent = 0);
+
     QTcpServer *server;
     QTcpSocket *socket;
 };

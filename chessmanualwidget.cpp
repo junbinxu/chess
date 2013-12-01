@@ -1,4 +1,5 @@
 #include "chessmanualwidget.h"
+#include "chessmanual.h"
 #include "chesslog.h"
 
 ChessManualWidget * ChessManualWidget::INSTANCE = 0;

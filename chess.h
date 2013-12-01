@@ -18,6 +18,8 @@ public slots:
 private:
     static Chess *INSTANCE;
     explicit Chess(QWidget *parent = 0);
+
+    void init();
 };
 
 #endif // CHESS_H

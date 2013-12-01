@@ -6,45 +6,47 @@
 #include "chessinformation.h"
 #include "chesslog.h"
 
-ChessOpposition * ChessDispatch::INSTANCE = 0;
+ChessDispatch * ChessDispatch::INSTANCE = 0;
 
-ChessOpposition *ChessDispatch::instance()
+ChessDispatch *ChessDispatch::instance()
 {
     if(!INSTANCE)
     {
-        switch(ChessInformation::instance()->getChessType())
-        {
-        case(ReplayType): INSTANCE = new ChessReplay; break;
-        case(ServerType): INSTANCE = new ChessServer; break;
-        case(ClientType): INSTANCE = new ChessClient; break;
-        case(AIType): INSTANCE = new ChessAIControl; break;
-        default: Chess_Fatal(tr("chess type error!")); break;
-        }
+        INSTANCE = new ChessDispatch;
     }
     return INSTANCE;
 }
 
 ChessDispatch::ChessDispatch(QObject *parent) :
-    QObject(parent)
+    QObject(parent), chessOpposition(0)
 {
-
+    switch(ChessInformation::instance()->getChessType())
+    {
+    case(ReplayType): chessOpposition = ChessReplay::instance(); break;
+    case(ServerType): chessOpposition = ChessServer::instance(); break;
+    case(ClientType): chessOpposition = ChessClient::instance(); break;
+    case(AIType): chessOpposition = ChessAIControl::instance(); break;
+    default: Chess_Fatal(tr("chess type error!")); break;
+    }
     Chess_Trace(tr("new ChessDispatch"));
 }
 
 ChessDispatch::~ChessDispatch()
 {
+    delete chessOpposition;
+    chessOpposition = 0;
     Chess_Trace(tr("delete ChessDispatch"));
 }
 
 bool ChessDispatch::isValid()
 {
-    if(INSTANCE) return INSTANCE->isValid();
+    if(chessOpposition) return chessOpposition->isValid();
     else return false;
 }
 
 void ChessDispatch::send(const QString &message)
 {
-    if(INSTANCE) INSTANCE->send(message);
+    if(chessOpposition) chessOpposition->send(message);
 }
 
 void ChessDispatch::receive(const QString &message)

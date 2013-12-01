@@ -1,17 +1,18 @@
 #include "chessopposition.h"
 #include "chesslog.h"
+#include "chessdispatch.h"
 
 ChessOpposition::ChessOpposition(QObject *parent) :
     QObject(parent)
 {
 
 
-    Chess_Trace(tr("new ChessOpposition"));
+    //Chess_Trace(tr("new ChessOpposition"));
 }
 
 ChessOpposition::~ChessOpposition()
 {
-    Chess_Trace(tr("delete ChessOpposition"));
+    //Chess_Trace(tr("delete ChessOpposition"));
 }
 
 bool ChessOpposition::isValid()
@@ -19,12 +20,7 @@ bool ChessOpposition::isValid()
     return false;
 }
 
-void ChessOpposition::send(const QString &)
-{
-
-}
-
 void ChessOpposition::receive(const QString &message)
 {
-    Q_UNUSED(message);
+    ChessDispatch::instance()->receive(message);
 }
