@@ -26,12 +26,12 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     clientRadioButton = new QRadioButton(QString::fromUtf8("\xe5\xae\xa2\xe6\x88\xb7\xe7\xab\xaf"));
     // 复盘
     replayRadioButton = new QRadioButton(QString::fromUtf8("\xe5\xa4\x8d\xe7\x9b\x98"));
-    // AI
-    AIRadioButton = new QRadioButton(QString::fromUtf8("\x41\x49"));
+    // 人机对战
+    AIRadioButton = new QRadioButton(QString::fromUtf8("\xe4\xba\xba\xe6\x9c\xba\xe5\xaf\xb9\xe6\x88\x98"));
     AIRadioButton->setChecked(true);
 
     //创建IP地址输入框，默认值为127.0.0.1
-    QLatin1String reg("^((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))$");
+    QLatin1String reg("^((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-4]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))$");
     ipLineEdit = new QLineEdit;
     QRegExpValidator *validator = new QRegExpValidator(QRegExp(reg), this);
     ipLineEdit->setValidator(validator);
@@ -43,6 +43,7 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
 
     //创建端口号输入框，默认值为8888。
     portSpinBox = new QSpinBox;
+    portSpinBox->setToolTip(QLatin1String("10000~65535"));
     portSpinBox->setRange(10000, 65535);
     portSpinBox->setValue(12345);
     portSpinBox->setDisabled(true);
@@ -88,7 +89,7 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     connect(okPushButton, SIGNAL(clicked()), this, SLOT(okPushButtonClicked()));
 
     //固定界面大小
-    //setFixedSize(sizeHint());
+    setFixedSize(sizeHint());
 
     //设置界面标题“中国象棋”
     setWindowTitle(QString::fromUtf8("\xe4\xb8\xad\xe5\x9b\xbd\xe8\xb1\xa1\xe6\xa3\x8b"));

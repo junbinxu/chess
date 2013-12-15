@@ -18,6 +18,9 @@ public:
     void saveChessManual();
 
 private:
+    void makeDir(const QString &dirName);
+
+
     explicit ChessManual(QObject *parent = 0);
     static ChessManual *INSTANCE;
 

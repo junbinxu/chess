@@ -4,7 +4,10 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamWriter>
 #include <QFile>
+#include <QDateTime>
 #include <QCoreApplication>
+#include <QFileInfo>
+#include <QDir>
 
 ChessManual * ChessManual::INSTANCE = 0;
 
@@ -28,24 +31,49 @@ ChessManual::~ChessManual()
     Chess_Trace(tr("delete ChessManual"));
 }
 
+void ChessManual::makeDir(const QString &dirName)
+{
+    QFileInfo fi(dirName);
+    QFile file(dirName);
+    QDir dir;
+    if(!(fi.exists() && fi.isDir()))
+    {
+        file.remove();
+        dir.mkpath(dirName);
+        Chess_Info(tr("make dir %1").arg(dirName));
+    }
+}
+
 void ChessManual::saveChessManual()
 {
+    bool isRed = ChessInformation::instance()->isRed();
+    QString myColor = isRed ? QLatin1String("red") : QLatin1String("black");
+    QString currentTime = QDateTime::currentDateTime()
+            .toString(QLatin1String("yyyyMMddHHmmsszzz"));
+    qint64 pid = QCoreApplication::instance()->applicationPid();
+    QString fileName = QString("chess_%1_%2_%3.xml")
+            .arg(myColor)
+            .arg(currentTime)
+            .arg(pid);
+    QString dirName = QCoreApplication::applicationDirPath() + "/manual/";
+    makeDir(dirName);
+    fileName.prepend(dirName);
+    QFile file(fileName);
+    if(file.exists())
+    {
+        Chess_Warning(tr("already save chess manual %1").arg(fileName));
+        return;
+    }
+    if(!file.open(QIODevice::Text | QIODevice::WriteOnly))
+    {
+        Chess_Warning(tr("can not save chess manual %1").arg(fileName));
+        return;
+    }
     QXmlStreamWriter writer;
     writer.setCodec("UTF-8");
     writer.setAutoFormatting(true);
-
-    bool isRed = ChessInformation::instance()->isRed();
-    QString myColor = isRed ? QLatin1String("red") : QLatin1String("black");
-    QString result = QLatin1String("unknown");
-
-    QString fileName = QCoreApplication::applicationDirPath() + "/manual/test.xml";
-    QFile file(fileName);
-    if(!file.open(QIODevice::Text | QIODevice::WriteOnly))
-    {
-        Chess_Warning(QObject::tr("can not save chess manual"));
-        return;
-    }
     int size = manual.size();
+    QString result = QLatin1String("unknown");
     writer.setDevice(&file);
     writer.writeStartDocument();                        //doc begin
 
