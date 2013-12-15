@@ -26,12 +26,14 @@ const int ChessChatWidget::maxLength = 20;
 ChessChatWidget::ChessChatWidget(QWidget *parent) :
     QWidget(parent)
 {
-    titleLabel = new QLabel(tr("chat"));
+    // 聊天
+    titleLabel = new QLabel(QString::fromUtf8("\xe8\x81\x8a\xe5\xa4\xa9"));
     inputLineEdit = new QLineEdit;
     inputLineEdit->setMaxLength(maxLength);
     showTextEdit = new QTextEdit;
     showTextEdit->setReadOnly(true);
-    sendPushButton = new QPushButton(tr("send"));
+    // 发送
+    sendPushButton = new QPushButton(QString::fromUtf8("\xe5\x8f\x91\xe9\x80\x81"));
 
     QHBoxLayout *lay1 = new QHBoxLayout;
     lay1->addWidget(inputLineEdit);
@@ -62,6 +64,7 @@ void ChessChatWidget::sendMessage()
 {
     QString message = inputLineEdit->text().trimmed();
     if(message.isEmpty()) return;
+    if(message.size() > maxLength) return;
     emit send(message);
     inputLineEdit->clear();
     showMessage(true, message);
@@ -76,7 +79,17 @@ void ChessChatWidget::showMessage(bool isMe, const QString &msg)
 {
     QDateTime dateTime = QDateTime::currentDateTime();
     QString currentTime = dateTime.toString(QLatin1String("yyyy-MM-dd HH:mm:ss"));
-    QString speaker = isMe ? tr("myself") : tr("other");
+    QString speaker;
+    if(isMe)
+    {
+        // 自己
+        speaker = QString::fromUtf8("\xe8\x87\xaa\xe5\xb7\xb1");
+    }
+    else
+    {
+        // 对方
+        speaker = QString::fromUtf8("\xe5\xaf\xb9\xe6\x96\xb9");
+    }
     QString message = QString("%1 [%2]\n%3").arg(currentTime).arg(speaker).arg(msg);
     showTextEdit->append(message);
 }

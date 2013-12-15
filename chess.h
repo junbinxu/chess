@@ -20,12 +20,13 @@ public:
 signals:
 
 public slots:
+    void aboutQt();
 
 private:
     static Chess *INSTANCE;
     explicit Chess(QWidget *parent = 0);
 
-    void init();
+    void initActions();
     void initMenuBar();
     void initToolBar();
 

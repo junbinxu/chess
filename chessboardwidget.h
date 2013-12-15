@@ -2,6 +2,7 @@
 #define CHESSBOARDWIDGET_H
 
 #include <QWidget>
+#include <QPainter>
 
 class ChessBoardWidget : public QWidget
 {
@@ -22,6 +23,13 @@ signals:
 public slots:
 
 private:
+    void makeBoardCache();
+    void makeChessesCache();
+    void paintBoard(QPainter &painter);
+    void paintChesses(QPainter &painter);
+    void paintSelectedChess(QPainter &painter);
+    void paintLastLines(QPainter &painter);
+    void paintSetupChoice(QPainter &painter);
     static ChessBoardWidget *INSTANCE;
     explicit ChessBoardWidget(QWidget *parent = 0);
 };

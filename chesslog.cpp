@@ -1,4 +1,4 @@
-#include <chessdefine.h>
+#include "chessdefine.h"
 #include "chesslog.h"
 #include <QDebug>
 #include <QDateTime>

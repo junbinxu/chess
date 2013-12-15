@@ -2,6 +2,7 @@
 #define CHESSSETTING_H
 
 #include <QHash>
+#include <QString>
 
 class ChessSetting
 {

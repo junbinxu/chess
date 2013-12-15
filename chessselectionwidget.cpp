@@ -20,10 +20,14 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     QWidget(parent)
 {
     //创建三个选项：服务器、客户端、复盘
-    serverRadioButton = new QRadioButton(tr("SERVER"));
-    clientRadioButton = new QRadioButton(tr("CLIENT"));
-    replayRadioButton = new QRadioButton(tr("REPLAY"));
-    AIRadioButton = new QRadioButton(tr("AI"));
+    // 服务器
+    serverRadioButton = new QRadioButton(QString::fromUtf8("\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x99\xa8"));
+    // 客户端
+    clientRadioButton = new QRadioButton(QString::fromUtf8("\xe5\xae\xa2\xe6\x88\xb7\xe7\xab\xaf"));
+    // 复盘
+    replayRadioButton = new QRadioButton(QString::fromUtf8("\xe5\xa4\x8d\xe7\x9b\x98"));
+    // AI
+    AIRadioButton = new QRadioButton(QString::fromUtf8("\x41\x49"));
     AIRadioButton->setChecked(true);
 
     //创建IP地址输入框，默认值为127.0.0.1
@@ -33,7 +37,8 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     ipLineEdit->setValidator(validator);
     ipLineEdit->setDisabled(true);
     ipLineEdit->setText(QLatin1String("127.0.0.1"));
-    ipLabel = new QLabel(tr("IP: "));
+    // IP：
+    ipLabel = new QLabel(QString::fromUtf8("\x49\x50\xef\xbc\x9a"));
     ipLabel->setBuddy(ipLineEdit);
 
     //创建端口号输入框，默认值为8888。
@@ -41,11 +46,12 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     portSpinBox->setRange(10000, 65535);
     portSpinBox->setValue(12345);
     portSpinBox->setDisabled(true);
-    portLabel = new QLabel(tr("PORT: "));
+    // 端口：
+    portLabel = new QLabel(QString::fromUtf8("\xe7\xab\xaf\xe5\x8f\xa3\xef\xbc\x9a"));
     portLabel->setBuddy(portSpinBox);
 
     //创建“确定”按钮
-    okPushButton = new QPushButton(tr("OK"));
+    okPushButton = new QPushButton(QString::fromUtf8("\xe7\xa1\xae\xe5\xae\x9a"));
 
     //界面布局：选项竖排在左边，输入框在右边，“确定”按钮在右下角
     QHBoxLayout *hBoxLayout1 = new QHBoxLayout;
@@ -85,7 +91,7 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     //setFixedSize(sizeHint());
 
     //设置界面标题“中国象棋”
-    setWindowTitle(tr("Chinese Chess"));
+    setWindowTitle(QString::fromUtf8("\xe4\xb8\xad\xe5\x9b\xbd\xe8\xb1\xa1\xe6\xa3\x8b"));
 
     Chess_Trace(tr("build ChessSelectionWidget"));
     Chess_Info(tr("please select chess type and input ip or port"));

@@ -19,7 +19,8 @@ ChessManualWidget * ChessManualWidget::instance()
 ChessManualWidget::ChessManualWidget(QWidget *parent) :
     QWidget(parent)
 {
-    titleLabel = new QLabel(tr("chess manual"));
+    // 棋谱
+    titleLabel = new QLabel(QString::fromUtf8("\xe6\xa3\x8b\xe8\xb0\xb1"));
     manualTextEdit = new QTextEdit;
     manualTextEdit->setReadOnly(true);
 

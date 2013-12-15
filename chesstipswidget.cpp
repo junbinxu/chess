@@ -18,7 +18,8 @@ ChessTipsWidget * ChessTipsWidget::instance()
 ChessTipsWidget::ChessTipsWidget(QWidget *parent) :
     QWidget(parent)
 {
-    titleLabel = new QLabel(tr("system information"));
+    // 系统信息
+    titleLabel = new QLabel(QString::fromUtf8("\xe7\xb3\xbb\xe7\xbb\x9f\xe4\xbf\xa1\xe6\x81\xaf"));
     tipsTextEdit = new QTextEdit;
     tipsTextEdit->setReadOnly(true);
 

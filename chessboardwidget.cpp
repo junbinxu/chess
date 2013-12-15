@@ -1,8 +1,8 @@
 #include "chessboardwidget.h"
 #include "chesslog.h"
-#include <QPainter>
 #include <QPaintEvent>
 #include <QMouseEvent>
+#include <QPixmapCache>
 
 ChessBoardWidget * ChessBoardWidget::INSTANCE = 0;
 
@@ -18,7 +18,8 @@ ChessBoardWidget * ChessBoardWidget::instance()
 ChessBoardWidget::ChessBoardWidget(QWidget *parent) :
     QWidget(parent)
 {
-
+    makeBoardCache();
+    makeChessesCache();
     Chess_Trace(tr("new ChessBoardWidget"));
 }
 
@@ -27,7 +28,48 @@ ChessBoardWidget::~ChessBoardWidget()
     Chess_Trace(tr("delete ChessBoardWidget"));
 }
 
+void  ChessBoardWidget::makeBoardCache()
+{
+
+}
+
+void ChessBoardWidget::makeChessesCache()
+{
+
+}
+
 void ChessBoardWidget::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+
+    paintBoard(painter);
+    paintChesses(painter);
+    paintSelectedChess(painter);
+    paintLastLines(painter);
+    paintSetupChoice(painter);
+}
+
+void ChessBoardWidget::paintBoard(QPainter &painter)
+{
+
+}
+
+void ChessBoardWidget::paintChesses(QPainter &painter)
+{
+
+}
+
+void ChessBoardWidget::paintSelectedChess(QPainter &painter)
+{
+
+}
+
+void ChessBoardWidget::paintLastLines(QPainter &painter)
+{
+
+}
+
+void ChessBoardWidget::paintSetupChoice(QPainter &painter)
 {
 
 }
