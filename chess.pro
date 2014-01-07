@@ -29,7 +29,8 @@ SOURCES += \
     chessaicontrol.cpp \
     chessopposition.cpp \
     chessselectionwidget.cpp \
-    chessprotocol.cpp
+    chessprotocol.cpp \
+    chessversion.cpp
 
 HEADERS += \
     chessdefine.h \
@@ -55,7 +56,8 @@ HEADERS += \
     chessaicontrol.h \
     chessopposition.h \
     chessselectionwidget.h \
-    chessprotocol.h
+    chessprotocol.h \
+    chessversion.h
 
 RESOURCES += \
     chess.qrc

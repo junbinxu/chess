@@ -21,6 +21,7 @@ signals:
 
 public slots:
     void aboutQt();
+    void checkForUpdate();
 
 private:
     static Chess *INSTANCE;
@@ -32,6 +33,7 @@ private:
 
     QAction *aboutQtAction;
     QAction *aboutChineseChessAction;
+    QAction *checkUpdateAction;
 
     QMenu *helpMenu;
 };
