@@ -32,6 +32,7 @@ ChessChatWidget::ChessChatWidget(QWidget *parent) :
     inputLineEdit->setMaxLength(maxLength);
     showTextEdit = new QTextEdit;
     showTextEdit->setReadOnly(true);
+    showTextEdit->document()->setMaximumBlockCount(500);
     // 发送
     sendPushButton = new QPushButton(QString::fromUtf8("\xe5\x8f\x91\xe9\x80\x81"));
 

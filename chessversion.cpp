@@ -1,5 +1,6 @@
 #include "chessversion.h"
 #include "chesslog.h"
+#include "chessdefine.h"
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QUrl>
@@ -16,6 +17,7 @@ ChessVersion * ChessVersion::instance()
 ChessVersion::ChessVersion(QObject *parent) :
     QObject(parent)
 {
+    versionState = UnKnown;
     Chess_Trace("new ChessVersion");
 }
 
@@ -24,7 +26,7 @@ ChessVersion::~ChessVersion()
     Chess_Trace("delete ChessVersion");
 }
 
-QString ChessVersion::buildTime() const
+QString ChessVersion::buildTime()
 {
     return QString("%1 %2").arg(__DATE__).arg(__TIME__);
 }
@@ -52,6 +54,7 @@ void ChessVersion::readError(QNetworkReply::NetworkError error)
     {
         Chess_Error("check for update error");
     }
+    emit finished();
     replay->deleteLater();
 }
 
@@ -112,6 +115,7 @@ void ChessVersion::processData(QByteArray data)
     if(reader.hasError())
     {
         Chess_Error(reader.errorString());
+        versionState = Error;
     }
     else
     {
@@ -120,15 +124,21 @@ void ChessVersion::processData(QByteArray data)
             if(version > CHESS_VERSION_INT)
             {
                 Chess_Info(QString("update %1 %2 %3").arg(version).arg(version_str).arg(url));
+                newVersionStr = version_str;
+                newDownloadUrl = url;
+                versionState = Old;
             }
             else
             {
                 Chess_Info(version_str + " is new, no update");
+                versionState = Updated;
             }
         }
         else
         {
             Chess_Error(QString("update %1 %2 %3").arg(version).arg(version_str).arg(url));
+            versionState = Error;
         }
     }
+    emit finished();
 }

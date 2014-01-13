@@ -23,6 +23,7 @@ ChessManualWidget::ChessManualWidget(QWidget *parent) :
     titleLabel = new QLabel(QString::fromUtf8("\xe6\xa3\x8b\xe8\xb0\xb1"));
     manualTextEdit = new QTextEdit;
     manualTextEdit->setReadOnly(true);
+    manualTextEdit->document()->setMaximumBlockCount(1200);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(titleLabel);

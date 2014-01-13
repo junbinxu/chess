@@ -1,12 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>music/0.wav</file>
-        <file>music/1.wav</file>
-        <file>music/2.wav</file>
-        <file>music/3.wav</file>
-        <file>music/4.wav</file>
-        <file>music/5.wav</file>
-        <file>music/6.wav</file>
         <file>image/1.png</file>
         <file>image/2.png</file>
         <file>image/3.png</file>

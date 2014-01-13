@@ -22,6 +22,7 @@ ChessTipsWidget::ChessTipsWidget(QWidget *parent) :
     titleLabel = new QLabel(QString::fromUtf8("\xe7\xb3\xbb\xe7\xbb\x9f\xe4\xbf\xa1\xe6\x81\xaf"));
     tipsTextEdit = new QTextEdit;
     tipsTextEdit->setReadOnly(true);
+    tipsTextEdit->document()->setMaximumBlockCount(500);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(titleLabel);

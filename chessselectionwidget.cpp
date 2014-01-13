@@ -199,8 +199,9 @@ bool ChessSelectionWidget::isIPOK()
 
 bool ChessSelectionWidget::isPortOK()
 {
-
-    return true;
+    int port = portSpinBox->value();
+    if((port >= 10000) && (port <= 65535)) return true;
+    return false;
 }
 
 

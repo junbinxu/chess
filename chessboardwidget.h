@@ -23,8 +23,7 @@ signals:
 public slots:
 
 private:
-    void makeBoardCache();
-    void makeChessesCache();
+    void makeImageCache();
     void paintBoard(QPainter &painter);
     void paintChesses(QPainter &painter);
     void paintSelectedChess(QPainter &painter);
@@ -32,6 +31,9 @@ private:
     void paintSetupChoice(QPainter &painter);
     static ChessBoardWidget *INSTANCE;
     explicit ChessBoardWidget(QWidget *parent = 0);
+
+    int fixWidth;
+    int fixHeight;
 };
 
 #endif // CHESSBOARDWIDGET_H

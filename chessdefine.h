@@ -11,6 +11,8 @@
 #define CHESS_MANUAL_FILE_VERSION_STR "1.0.0"
 #define CHESS_MANUAL_FILE_VERSION_INT 0x010000
 
+#define CHESS_SIZE 60
+
 //
 enum LogLevel
 {
