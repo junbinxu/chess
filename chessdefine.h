@@ -58,43 +58,42 @@ enum ChessResult
 };
 
 //
-enum ChessChess
-{
-    NO_CHESS = 0,
-    RED_KING = 1,
-    RED_SHI1 = 2,
-    RED_SHI2 = 3,
-    RED_XIANG1 = 4,
-    RED_XIANG2 = 5,
-    RED_MA1 = 6,
-    RED_MA2 = 7,
-    RED_JU1 = 8,
-    RED_JU2 = 9,
-    RED_PAO1 = 10,
-    RED_PAO2 = 11,
-    RED_BZ1 = 12,
-    RED_BZ2 = 13,
-    RED_BZ3 = 14,
-    RED_BZ4 = 15,
-    RED_BZ5 = 16,
-    BLACK_KING = 17,
-    BLACK_SHI1 = 18,
-    BLACK_SHI2 = 19,
-    BLACK_XIANG1 = 20,
-    BLACK_XIANG2 = 21,
-    BLACK_MA1 = 22,
-    BLACK_MA2 = 23,
-    BLACK_JU1 = 24,
-    BLACK_JU2 = 25,
-    BLACK_PAO1 = 26,
-    BLACK_PAO2 = 27,
-    BLACK_BZ1 = 28,
-    BLACK_BZ2 = 29,
-    BLACK_BZ3 = 30,
-    BLACK_BZ4 = 31,
-    BLACK_BZ5 = 32
-};
 
+#define RED_SHUAI       0
+#define RED_JU1         1
+#define RED_JU2         2
+#define RED_MA1         3
+#define RED_MA2         4
+#define RED_PAO1        5
+#define RED_PAO2        6
+#define RED_SHI1        7
+#define RED_SHI2        8
+#define RED_XIANG1      9
+#define RED_XIANG2      10
+#define RED_BING1       11
+#define RED_BING2       12
+#define RED_BING3       13
+#define RED_BING4       14
+#define RED_BING5       15
+#define BLACK_JIANG     16
+#define BLACK_JU1       17
+#define BLACK_JU2       18
+#define BLACK_MA1       19
+#define BLACK_MA2       20
+#define BLACK_PAO1      21
+#define BLACK_PAO2      22
+#define BLACK_SHI1      23
+#define BLACK_SHI2      24
+#define BLACK_XIANG1    25
+#define BLACK_XIANG2    26
+#define BLACK_ZU1       27
+#define BLACK_ZU2       28
+#define BLACK_ZU3       29
+#define BLACK_ZU4       30
+#define BLACK_ZU5       31
+#define EMPTY_CHESS     32
+#define RED_BOARD       33
+#define BLACK_BOARD     34
 
 
 

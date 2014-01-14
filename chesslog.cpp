@@ -1,6 +1,5 @@
 #include "chessdefine.h"
 #include "chesslog.h"
-#include <QDebug>
 #include <QDateTime>
 
 QString levelToText(LogLevel level)

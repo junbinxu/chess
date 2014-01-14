@@ -2,6 +2,7 @@
 #define CHESSLOG_H
 
 #include <QString>
+#include <QDebug>
 
 void Chess_Trace(const QString &message);
 void Chess_Debug(const QString &message);

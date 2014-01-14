@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QPen>
 
 class ChessBoardWidget : public QWidget
 {
@@ -21,9 +22,12 @@ protected:
 signals:
 
 public slots:
+    void big();
+    void small();
 
 private:
     void makeImageCache();
+    void makePens();
     void paintBoard(QPainter &painter);
     void paintChesses(QPainter &painter);
     void paintSelectedChess(QPainter &painter);
@@ -31,9 +35,19 @@ private:
     void paintSetupChoice(QPainter &painter);
     static ChessBoardWidget *INSTANCE;
     explicit ChessBoardWidget(QWidget *parent = 0);
+    void doMouseEvent(QMouseEvent *event, int type);
 
-    int fixWidth;
-    int fixHeight;
+    QPen selectedPen;
+
+    bool isBlack() const;
+
+    double xLogToPhy(int x) const;
+    double yLogToPhy(int y) const;
+    int xPhyToLog(double x) const;
+    int yPhyToLog(double y) const;
+
+    double factor;
+    double halfFactor;
 };
 
 #endif // CHESSBOARDWIDGET_H
