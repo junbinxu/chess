@@ -9,6 +9,8 @@
 #include <QPixmapCache>
 #include <QSizePolicy>
 #include <QCursor>
+#include <QList>
+#include <QLine>
 #include <QDebug>
 
 ChessBoardWidget * ChessBoardWidget::INSTANCE = 0;
@@ -76,6 +78,18 @@ void ChessBoardWidget::makePens()
     selectedPen.setJoinStyle(Qt::RoundJoin);
     selectedPen.setStyle(Qt::SolidLine);
     selectedPen.setWidthF(3.0);
+
+    linePen.setCapStyle(Qt::RoundCap);
+    linePen.setColor(Qt::cyan);
+    linePen.setJoinStyle(Qt::RoundJoin);
+    linePen.setStyle(Qt::DashLine);
+    linePen.setWidthF(3.0);
+
+    choicePen.setCapStyle(Qt::RoundCap);
+    choicePen.setColor(QColor(0, 255, 0, 150));
+    choicePen.setJoinStyle(Qt::RoundJoin);
+    choicePen.setStyle(Qt::DashLine);
+    choicePen.setWidthF(3.0);
 }
 
 void ChessBoardWidget::paintEvent(QPaintEvent *)
@@ -201,12 +215,32 @@ void ChessBoardWidget::paintSelectedChess(QPainter &painter)
 
 void ChessBoardWidget::paintLastLines(QPainter &painter)
 {
-    Q_UNUSED(painter);
+    QLine line = ChessData::instance()->getGoLine();
+    int x1 = line.p1().x();
+    int y1 = line.p1().y();
+    int x2 = line.p2().x();
+    int y2 = line.p2().y();
+    if((x1<0)||(y1<0)||(x2<0)||(y2<0)) return;
+
+    QLineF lineF(xLogToPhy(x1),yLogToPhy(y1),xLogToPhy(x2),yLogToPhy(y2));
+    painter.setPen(linePen);
+    painter.drawLine(lineF);
 }
 
 void ChessBoardWidget::paintSetupChoice(QPainter &painter)
 {
-    Q_UNUSED(painter);
+    QList<QPoint> pl(ChessData::instance()->getChoicePoints());
+    if(pl.isEmpty()) return;
+    painter.setPen(choicePen);
+    int size = pl.size();
+    for(int i=0; i<size; ++i)
+    {
+        int x = pl.at(i).x();
+        int y = pl.at(i).y();
+        if((x<0)||(x>8)||(y>9)||(y<0)) continue;
+        painter.drawEllipse(QPointF(xLogToPhy(x), yLogToPhy(y)),
+                            halfFactor/2.0, halfFactor/2.0);
+    }
 }
 
 void ChessBoardWidget::mousePressEvent(QMouseEvent *event)
@@ -274,7 +308,7 @@ void ChessBoardWidget::doMouseEvent(QMouseEvent *event, int type)
             //empty
             if(2 == type)
             {
-                ChessCore::instance()->selectEmpty();
+                ChessCore::instance()->selectEmpty(p);
             }
             else
             {

@@ -38,6 +38,8 @@ private:
     void doMouseEvent(QMouseEvent *event, int type);
 
     QPen selectedPen;
+    QPen linePen;
+    QPen choicePen;
 
     bool isBlack() const;
 

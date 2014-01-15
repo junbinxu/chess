@@ -44,6 +44,10 @@ void ChessData::init()
     Q_ASSERT(data.size() == 32);
 
     selectedChessPos = QPoint(-100, -100);
+    goLine = QLine(-100, -100, -100, -100);
+    choicePoints.clear();
+
+    //choicePoints << QPoint(0, 0) << QPoint(5, 5);
 }
 
 bool ChessData::isMine(int id) const
@@ -58,22 +62,14 @@ bool ChessData::isMine(int id) const
     }
 }
 
-void ChessData::putChess(int id, QPoint p)
-{
-    data[id] = p;
-}
-
-void ChessData::deleteChess(int id)
-{
-    data[id] = QPoint(-100, -100);
-}
-
 void ChessData::moveChess(int fid, QPoint to)
 {
     if((fid>=0)&&(fid<=31))
     {
         deleteChess(fid);
         putChess(fid, to);
+        goLine.setPoints(selectedChessPos, to);
+        clearSelectChess();
     }
 }
 
@@ -84,30 +80,38 @@ void ChessData::eatChess(int fid, int tid, QPoint to)
         deleteChess(fid);
         deleteChess(tid);
         putChess(fid, to);
+        goLine.setPoints(selectedChessPos, to);
+        clearSelectChess();
     }
 }
 
-void ChessData::selectChess(QPoint p)
+int ChessData::chessNumberFromTo(const QPoint &f, const QPoint &t)
 {
-    selectedChessPos = p;
+    int x1 = f.x();
+    int y1 = f.y();
+    int x2 = t.x();
+    int y2 = t.y();
+    if(x1 == x2)
+    {
+        int y_min = qMin(y1, y2)+1;
+        int y_max = qMax(y1, y2)-1;
+        int count = 0;
+        for(int i=y_min; i<=y_max; ++i)
+        {
+            if(isNotEmpty(QPoint(x1, i))) ++count;
+        }
+        return count;
+    }
+    else if(y1 == y2)
+    {
+        int x_min = qMin(x1, x2)+1;
+        int x_max = qMax(x1, x2)-1;
+        int count = 0;
+        for(int j=x_min; j<=x_max; ++j)
+        {
+            if(isNotEmpty(QPoint(j, y1))) ++count;
+        }
+        return count;
+    }
+    else return -1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

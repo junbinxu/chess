@@ -4,6 +4,7 @@
 #include <QtGlobal>
 #include <QPoint>
 #include <QList>
+#include <QLine>
 
 class ChessData
 {
@@ -38,19 +39,31 @@ public:
     void moveChess(int fid, QPoint to);
     void eatChess(int fid, int tid, QPoint to);
 
-    void selectChess(QPoint p);
+    inline void setSelectedChess(const QPoint &p) {selectedChessPos = p;}
     inline QPoint getSelectedChess() const {return selectedChessPos;}
+    inline QLine getGoLine() const {return goLine;}
+
+    inline void clearSelectChess() {selectedChessPos = QPoint(-100, -100);}
+
+    inline QList<QPoint> getChoicePoints() const {return choicePoints;}
+    inline void setChoicePoints(const QList<QPoint> &pl) {choicePoints = pl;}
+
+    int chessNumberFromTo(const QPoint &f, const QPoint &t);
 
 private:
     static ChessData *INSTANCE;
     explicit ChessData();
 
-    void putChess(int id, QPoint p);
-    void deleteChess(int id);
+    inline void putChess(int id, QPoint p) {data[id] = p;}
+    inline void deleteChess(int id) {data[id] = QPoint(-100, -100);}
+
+    inline bool isNotEmpty(const QPoint &p) const {return data.contains(p);}
 
     QList<QPoint> data;
 
     QPoint selectedChessPos;
+    QLine goLine;
+    QList<QPoint> choicePoints;
 
     static const int chessInitPos[32][2];
 };

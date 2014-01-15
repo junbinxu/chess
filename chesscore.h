@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QList>
 
 class ChessCore : public QObject
 {
@@ -11,22 +12,31 @@ class ChessCore : public QObject
 public:
     static ChessCore *instance();
     ~ChessCore();
+    void init();
 
-    void selectEmpty();
+    void selectEmpty(const QPoint &to);
     void selectChess(int id, const QPoint &p);
 
-    inline bool isMyTurn() const {return myTurn;}
 
 signals:
 
 public slots:
 
+
 private:
     static ChessCore *INSTANCE;
     explicit ChessCore(QObject *parent = 0);
 
-    bool myTurn;
+    void _moveChess(int fid, const QPoint &to);
+    void _eatChess(int fid, int tid, const QPoint &to);
+    void _selectMyChess(int id, const QPoint &p);
 
+    bool lastSelected;
+    bool thisTurn;
+    bool thisReady;
+    bool thatReady;
+
+    QList<QPoint> choice;
 };
 
 #endif // CHESSCORE_H
