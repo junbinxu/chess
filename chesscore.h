@@ -31,12 +31,13 @@ private:
     void _eatChess(int fid, int tid, const QPoint &to);
     void _selectMyChess(int id, const QPoint &p);
 
+    bool isOK(const QPoint &p);
+
     bool lastSelected;
     bool thisTurn;
     bool thisReady;
     bool thatReady;
 
-    QList<QPoint> choice;
 };
 
 #endif // CHESSCORE_H

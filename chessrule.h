@@ -38,6 +38,17 @@ private:
     QList<QPoint> _ma(int id, const QPoint &p);
     QList<QPoint> _ju(int id, const QPoint &p);
     QList<QPoint> _pao(int id, const QPoint &p);
+    QList<QPoint> _xiang(int id, const QPoint &p, const int ARR[7][2]);
+    QList<QPoint> _shi(int id, const QPoint &p, const int ARR[5][2]);
+    QList<QPoint> _shuai_jiang(int id, const QPoint &p, const int ARR[9][2]);
+
+    static const int DMA[8][2];
+    static const int DXIANG_RED[7][2];
+    static const int DXIANG_BLACK[7][2];
+    static const int DSHI_RED[5][2];
+    static const int DSHI_BLACK[5][2];
+    static const int DSHUAI_RED[9][2];
+    static const int DJIANG_BLACK[9][2];
 };
 
 #endif // CHESSRULE_H

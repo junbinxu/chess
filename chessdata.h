@@ -34,19 +34,25 @@ public:
         return ((*p = getPos(id)).x() >= 0);
     }
     bool isMine(int id) const;
+    bool isMine(const QPoint &p) const;
 
 
     void moveChess(int fid, QPoint to);
     void eatChess(int fid, int tid, QPoint to);
-
+    inline bool isNotEmpty(const QPoint &p) const {return data.contains(p);}
     inline void setSelectedChess(const QPoint &p) {selectedChessPos = p;}
     inline QPoint getSelectedChess() const {return selectedChessPos;}
     inline QLine getGoLine() const {return goLine;}
 
-    inline void clearSelectChess() {selectedChessPos = QPoint(-100, -100);}
+    inline void clearSelectChess()
+    {
+        selectedChessPos = QPoint(-100, -100);
+        choicePoints.clear();
+    }
 
     inline QList<QPoint> getChoicePoints() const {return choicePoints;}
     inline void setChoicePoints(const QList<QPoint> &pl) {choicePoints = pl;}
+    inline bool isOK(const QPoint &p) const {return choicePoints.contains(p);}
 
     int chessNumberFromTo(const QPoint &f, const QPoint &t);
 
@@ -57,7 +63,7 @@ private:
     inline void putChess(int id, QPoint p) {data[id] = p;}
     inline void deleteChess(int id) {data[id] = QPoint(-100, -100);}
 
-    inline bool isNotEmpty(const QPoint &p) const {return data.contains(p);}
+
 
     QList<QPoint> data;
 

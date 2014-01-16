@@ -62,6 +62,11 @@ bool ChessData::isMine(int id) const
     }
 }
 
+bool ChessData::isMine(const QPoint &p) const
+{
+    return isMine(isWho(p));
+}
+
 void ChessData::moveChess(int fid, QPoint to)
 {
     if((fid>=0)&&(fid<=31))

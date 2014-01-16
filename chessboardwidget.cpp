@@ -88,8 +88,8 @@ void ChessBoardWidget::makePens()
     choicePen.setCapStyle(Qt::RoundCap);
     choicePen.setColor(QColor(0, 255, 0, 150));
     choicePen.setJoinStyle(Qt::RoundJoin);
-    choicePen.setStyle(Qt::DashLine);
-    choicePen.setWidthF(3.0);
+    choicePen.setStyle(Qt::SolidLine);
+    choicePen.setWidthF(6.0);
 }
 
 void ChessBoardWidget::paintEvent(QPaintEvent *)

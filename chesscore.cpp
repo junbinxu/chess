@@ -35,7 +35,6 @@ void ChessCore::init()
     thisReady = false;
     thatReady = false;
 
-    choice.clear();
 }
 
 void ChessCore::selectEmpty(const QPoint &to)
@@ -52,7 +51,7 @@ void ChessCore::selectEmpty(const QPoint &to)
         QPoint from = d->getSelectedChess();
         int fid = d->isWho(from);
 
-        if(choice.contains(to))
+        if(isOK(to))
         {
             _moveChess(fid, to);
         }
@@ -81,7 +80,7 @@ void ChessCore::selectChess(int id, const QPoint &p)
     {
         if(lastSelected)
         {
-            if(choice.contains(p))
+            if(isOK(p))
             {
                 _eatChess(d->isWho(d->getSelectedChess()), id, p);
             }
@@ -109,5 +108,10 @@ void ChessCore::_selectMyChess(int id, const QPoint &p)
     ChessData *d = ChessData::instance();
     d->setSelectedChess(p);
     lastSelected = true;
-    choice = ChessRule::instance()->getChoice(id, p);
+    d->setChoicePoints(ChessRule::instance()->getChoice(id, p));
+}
+
+bool ChessCore::isOK(const QPoint &p)
+{
+    return ChessData::instance()->isOK(p);
 }
