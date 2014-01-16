@@ -7,6 +7,7 @@ QT_BEGIN_NAMESPACE
 class QMenu;
 class QToolBar;
 class QAction;
+class QToolBar;
 QT_END_NAMESPACE
 
 class Chess : public QMainWindow
@@ -21,6 +22,11 @@ signals:
 
 public slots:
     void aboutQt();
+    void newGame();
+    void startGame();
+    void exitGame();
+    void changeGame();
+    void saveGame();
 
 private:
     static Chess *INSTANCE;
@@ -33,11 +39,14 @@ private:
     QAction *aboutQtAction;
     QAction *aboutChineseChessAction;
     QAction *newGameAction;
-    QAction *exitAction;
+    QAction *exitGameAction;
     QAction *startGameAction;
-    QAction *changeAction;
+    QAction *changeGameAction;
+    QAction *saveGameAction;
 
     QMenu *helpMenu;
+
+    QToolBar *toolbar;
 };
 
 #endif // CHESS_H

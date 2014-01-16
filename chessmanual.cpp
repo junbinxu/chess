@@ -87,6 +87,7 @@ void ChessManual::saveChessManual()
     writer.writeAttribute(QLatin1String("count"), QString::number(size));
     writer.writeAttribute(QLatin1String("color"), myColor);
     writer.writeAttribute(QLatin1String("result"), result);
+    writer.writeTextElement("start_manual", "aaaaaaaa");
     writer.writeEndElement();                           //outline end
 
     writer.writeStartElement(QLatin1String("detail"));
@@ -102,7 +103,6 @@ void ChessManual::saveChessManual()
 
 void ChessManual::writeSetup(int i)
 {
-    Q_UNUSED(i);
     //writer.writeStartElement(QLatin1String("setup"));
     //writer.writeAttribute(QLatin1String("id"), QString::number(i));
     //writer.writeEndElement();

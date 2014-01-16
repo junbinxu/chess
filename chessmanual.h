@@ -3,10 +3,20 @@
 
 #include <QObject>
 #include <QList>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 
 QT_END_NAMESPACE
+
+struct ManualNode
+{
+    int id;
+    QString start;
+    QString go;
+    QString cgo;
+    QString end;
+};
 
 class ChessManual : public QObject
 {
@@ -24,7 +34,7 @@ private:
     explicit ChessManual(QObject *parent = 0);
     static ChessManual *INSTANCE;
 
-    QList<QString> manual;
+    QList<ManualNode> manual;
 
     void writeSetup(int i);
 };

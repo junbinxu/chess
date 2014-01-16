@@ -77,12 +77,21 @@ void Chess::initActions()
     aboutChineseChessAction = new QAction(QString::fromUtf8("\xe5\x85\xb3\xe4\xba\x8e\xe4\xb8\xad\xe5\x9b\xbd\xe8\xb1\xa1\xe6\xa3\x8b"), this);
     connect(aboutChineseChessAction, SIGNAL(triggered()),
             ChessVersionDialog::instance(), SLOT(show()));
-}
 
-void Chess::aboutQt()
-{
-    // 关于 Qt
-    QMessageBox::aboutQt(this, QString::fromUtf8("\xe5\x85\xb3\xe4\xba\x8e\x20\x51\x74"));
+    newGameAction = new QAction(QString::fromUtf8("new"), this);
+    connect(newGameAction, SIGNAL(triggered()), this, SLOT(newGame()));
+
+    startGameAction = new QAction(QString::fromUtf8("start"), this);
+    connect(startGameAction, SIGNAL(triggered()), this, SLOT(startGame()));
+
+    changeGameAction = new QAction(QString::fromUtf8("change"), this);
+    connect(changeGameAction, SIGNAL(triggered()), this, SLOT(changeGame()));
+
+    exitGameAction = new QAction(QString::fromUtf8("exit"), this);
+    connect(exitGameAction, SIGNAL(triggered()), this, SLOT(exitGame()));
+
+    saveGameAction = new QAction(QString::fromUtf8("save"), this);
+    connect(saveGameAction, SIGNAL(triggered()), this, SLOT(saveGame()));
 }
 
 void Chess::initMenuBar()
@@ -97,6 +106,42 @@ void Chess::initMenuBar()
 }
 
 void Chess::initToolBar()
+{
+    toolbar = addToolBar("chess");
+    toolbar->addAction(newGameAction);
+    toolbar->addAction(startGameAction);
+    toolbar->addAction(changeGameAction);
+    toolbar->addAction(saveGameAction);
+    toolbar->addAction(exitGameAction);
+}
+
+void Chess::aboutQt()
+{
+    // 关于 Qt
+    QMessageBox::aboutQt(this, QString::fromUtf8("\xe5\x85\xb3\xe4\xba\x8e\x20\x51\x74"));
+}
+
+void Chess::newGame()
+{
+
+}
+
+void Chess::startGame()
+{
+
+}
+
+void Chess::exitGame()
+{
+    close();
+}
+
+void Chess::changeGame()
+{
+
+}
+
+void Chess::saveGame()
 {
 
 }

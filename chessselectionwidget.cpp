@@ -41,7 +41,7 @@ ChessSelectionWidget::ChessSelectionWidget(QWidget *parent) :
     ipLabel = new QLabel(QString::fromUtf8("\x49\x50\xef\xbc\x9a"));
     ipLabel->setBuddy(ipLineEdit);
 
-    //创建端口号输入框，默认值为8888。
+    //创建端口号输入框，默认值为12345
     portSpinBox = new QSpinBox;
     portSpinBox->setToolTip(QLatin1String("10000~65535"));
     portSpinBox->setRange(10000, 65535);
