@@ -71,9 +71,9 @@ void ChessData::moveChess(int fid, QPoint to)
 {
     if((fid>=0)&&(fid<=31))
     {
+        goLine.setPoints(getPos(fid), to);
         deleteChess(fid);
         putChess(fid, to);
-        goLine.setPoints(selectedChessPos, to);
         clearSelectChess();
     }
 }
@@ -82,10 +82,10 @@ void ChessData::eatChess(int fid, int tid, QPoint to)
 {
     if((fid>=0)&&(fid<=31)&&(tid>=0)&&(tid<=31))
     {
+        goLine.setPoints(getPos(fid), to);
         deleteChess(fid);
         deleteChess(tid);
         putChess(fid, to);
-        goLine.setPoints(selectedChessPos, to);
         clearSelectChess();
     }
 }

@@ -4,6 +4,7 @@
 #include "chessinformation.h"
 #include "chessboardwidget.h"
 #include "chessrule.h"
+#include "chessprotocol.h"
 
 ChessCore * ChessCore::INSTANCE = 0;
 
@@ -20,6 +21,8 @@ ChessCore::ChessCore(QObject *parent) :
     QObject(parent)
 {
     init();
+    connect(ChessProtocol::instance(), SIGNAL(receiveChessMessage(int,int,QPoint,QPoint)),
+            this, SLOT(receiveChessMessage(int,int,QPoint,QPoint)));
     Chess_Trace(tr("new ChessCore"));
 }
 
@@ -31,7 +34,7 @@ ChessCore::~ChessCore()
 void ChessCore::init()
 {
     lastSelected = false;
-    thisTurn = true;
+    thisTurn = ChessInformation::instance()->isRed() ? true : false;
     thisReady = false;
     thatReady = false;
 
@@ -92,15 +95,19 @@ void ChessCore::selectChess(int id, const QPoint &p)
 void ChessCore::_moveChess(int fid, const QPoint &to)
 {
     ChessData *d = ChessData::instance();
+    ChessProtocol::instance()->sendChessMessgae(fid, EMPTY_CHESS, d->getPos(fid), to);
     d->moveChess(fid, to);
     lastSelected = false;
+    thisTurn = false;
 }
 
 void ChessCore::_eatChess(int fid, int tid, const QPoint &to)
 {
     ChessData *d = ChessData::instance();
+    ChessProtocol::instance()->sendChessMessgae(fid, tid, d->getPos(fid), to);
     d->eatChess(fid, tid, to);
     lastSelected = false;
+    thisTurn = false;
 }
 
 void ChessCore::_selectMyChess(int id, const QPoint &p)
@@ -114,4 +121,24 @@ void ChessCore::_selectMyChess(int id, const QPoint &p)
 bool ChessCore::isOK(const QPoint &p)
 {
     return ChessData::instance()->isOK(p);
+}
+
+void ChessCore::receiveChessMessage(int fid, int tid, const QPoint &from, const QPoint &to)
+{
+    if(!(ChessRule::instance()->getChoice(fid, from).contains(to)))
+    {
+        Chess_Error("receive error move chess");
+        return;
+    }
+    ChessData *d = ChessData::instance();
+    if(EMPTY_CHESS == tid)
+    {
+        d->moveChess(fid, to);
+    }
+    else
+    {
+        d->eatChess(fid, tid, to);
+    }
+    thisTurn = true;
+    ChessBoardWidget::instance()->update();
 }

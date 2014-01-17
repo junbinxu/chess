@@ -22,7 +22,6 @@ protected:
     void keyPressEvent(QKeyEvent *e);
 
 signals:
-    void send(const QString &msg);
 
 public slots:
     void sendMessage();
@@ -30,6 +29,9 @@ public slots:
 
 private:
     void showMessage(bool isMe, const QString &msg);
+
+    QString toUtf8(const QString &msg) const;
+    QString fromUtf8(const QString &utf8) const;
 
     const static int maxLength;
 

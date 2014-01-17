@@ -2,17 +2,40 @@
 #define CHESSPROTOCOL_H
 
 #include <QString>
+#include <QObject>
+#include <QSet>
+#include <QPoint>
 
-class ChessProtocol
+class ChessProtocol: public QObject
 {
+    Q_OBJECT
     Q_DISABLE_COPY(ChessProtocol)
 public:
     static ChessProtocol *instance();
     ~ChessProtocol();
+    void sendChatMessage(const QString &msg);
+    void sendChessMessgae(int fid, int tid, const QPoint &from, const QPoint &to);
+    void receiveMessage(const QString &msg);
+
+signals:
+    void receiveChatMessage(const QString &msg);
+    void receiveChessMessage(int fid, int tid, const QPoint &from, const QPoint &to);
 
 private:
     static ChessProtocol *INSTANCE;
-    explicit ChessProtocol();
+    explicit ChessProtocol(QObject *parent=0);
+
+    QString makeMessage(const QString &type, const QString &msg) const;
+
+    QString makeChessMessage(int fid, int tid, const QPoint &from, const QPoint &to) const;
+
+    QString chessTime() const;
+    QString chessType(const QString &type) const;
+    QString chessMessage(const QString &msg) const;
+
+    static const QString KEY[3];
+
+    QSet<QString> keySet;
 };
 
 #endif // CHESSPROTOCOL_H

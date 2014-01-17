@@ -21,7 +21,7 @@ public:
 signals:
 
 public slots:
-
+    void receiveChessMessage(int fid, int tid, const QPoint &from, const QPoint &to);
 
 private:
     static ChessCore *INSTANCE;

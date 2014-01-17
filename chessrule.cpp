@@ -68,10 +68,10 @@ QList<QPoint> ChessRule::getChoice(int id, const QPoint &p)
     int x = p.x();
     int y = p.y();
     ChessData *d = ChessData::instance();
-    if((id<0)||(id>31)||(!(d->isLive(id)))||(!(d->isMine(id)))
+    if((id<0)||(id>31)||(!(d->isLive(id)))
             ||(x<0)||(x>8)||(y<0)||(y>9))
     {
-        Chess_Error(QString("error select: id=%1 at (%2, %3)").arg(id).arg(x).arg(y));
+        Chess_Error(QString("error choice: id=%1 at (%2, %3)").arg(id).arg(x).arg(y));
         return pl;
     }
 
@@ -147,22 +147,22 @@ QList<QPoint> ChessRule::red_bing(int id, const QPoint &p)
 {
     Q_UNUSED(id);
     QList<QPoint> pl;
-    ChessData *d = ChessData::instance();
+    //ChessData *d = ChessData::instance();
     int x = p.x();
     int y = p.y();
     QPoint toLeft(x-1, y);
     QPoint toRight(x+1, y);
     QPoint toHead(x, y-1);
 
-    if((y>=1)&&(!(d->isMine(toHead))))
+    if((y>=1)&&(isOK(id, toHead)))
     {
         pl.append(toHead);
     }
-    if((y<=4)&&(x>=1)&&(!(d->isMine(toLeft))))
+    if((y<=4)&&(x>=1)&&(isOK(id, toLeft)))
     {
         pl.append(toLeft);
     }
-    if((y<=4)&&(x<=7)&&(!(d->isMine(toRight))))
+    if((y<=4)&&(x<=7)&&(isOK(id, toRight)))
     {
         pl.append(toRight);
     }
@@ -203,22 +203,22 @@ QList<QPoint> ChessRule::black_zu(int id, const QPoint &p)
 {
     Q_UNUSED(id);
     QList<QPoint> pl;
-    ChessData *d = ChessData::instance();
+    //ChessData *d = ChessData::instance();
     int x = p.x();
     int y = p.y();
     QPoint toLeft(x-1, y);
     QPoint toRight(x+1, y);
     QPoint toHead(x, y+1);
 
-    if((y<=8)&&(!(d->isMine(toHead))))
+    if((y<=8)&&(isOK(id, toHead)))
     {
         pl.append(toHead);
     }
-    if((y>=5)&&(x>=1)&&(!(d->isMine(toLeft))))
+    if((y>=5)&&(x>=1)&&(isOK(id, toLeft)))
     {
         pl.append(toLeft);
     }
-    if((y>=5)&&(x<=7)&&(!(d->isMine(toRight))))
+    if((y>=5)&&(x<=7)&&(isOK(id, toRight)))
     {
         pl.append(toRight);
     }
@@ -229,7 +229,7 @@ QList<QPoint> ChessRule::_shuai_jiang(int id, const QPoint &p, const int ARR[9][
 {
     Q_UNUSED(id);
     QList<QPoint> pl;
-    ChessData *d = ChessData::instance();
+    //ChessData *d = ChessData::instance();
     int x = p.x();
     int y = p.y();
     for(int i=0; i<9; ++i)
@@ -239,7 +239,7 @@ QList<QPoint> ChessRule::_shuai_jiang(int id, const QPoint &p, const int ARR[9][
         QPoint point(tx, ty);
         if(qAbs(x-tx) + qAbs(y-ty) == 1)
         {
-            if(!(d->isMine(point))) pl.append(point);
+            if(isOK(id, point)) pl.append(point);
         }
     }
     return pl;
@@ -260,7 +260,7 @@ QList<QPoint> ChessRule::_xiang(int id, const QPoint &p, const int ARR[7][2])
         if((x != tx) && (y != ty) && (qAbs(x-tx) + qAbs(y-ty) == 4))
         {
             QPoint tmp((x+tx)/2, (y+ty)/2);
-            if((!d->isMine(point)) && (d->isEmpty(tmp))) pl.append(point);
+            if((isOK(id, point)) && (d->isEmpty(tmp))) pl.append(point);
         }
     }
     return pl;
@@ -270,7 +270,7 @@ QList<QPoint> ChessRule::_shi(int id, const QPoint &p, const int ARR[5][2])
 {
     Q_UNUSED(id);
     QList<QPoint> pl;
-    ChessData *d = ChessData::instance();
+    //ChessData *d = ChessData::instance();
     int x = p.x();
     int y = p.y();
     for(int i=0; i<5; ++i)
@@ -280,7 +280,7 @@ QList<QPoint> ChessRule::_shi(int id, const QPoint &p, const int ARR[5][2])
         QPoint point(tx, ty);
         if((x != tx) && (y != ty) && (qAbs(x-tx) + qAbs(y-ty) == 2))
         {
-            if(!(d->isMine(point))) pl.append(point);
+            if(isOK(id, point)) pl.append(point);
         }
     }
     return pl;
@@ -302,7 +302,7 @@ QList<QPoint> ChessRule::_ma(int id, const QPoint &p)
         int ty = y + dy;
         if((tx<0)||(tx>8)||(ty<0)||(ty>9)) continue;
         QPoint point(tx, ty);
-        if(d->isMine(point)) continue;
+        if(!isOK(id, point)) continue;
         QPoint tmp;
         if(1 == qAbs(dx))
         {
@@ -336,7 +336,7 @@ QList<QPoint> ChessRule::_ju(int id, const QPoint &p)
     {
         if(i == x) continue;
         QPoint point(i, y);
-        if(d->isMine(point)) continue;
+        if(!isOK(id, point)) continue;
         int count = d->chessNumberFromTo(point, p);
         if(0 == count)
         {
@@ -347,7 +347,7 @@ QList<QPoint> ChessRule::_ju(int id, const QPoint &p)
     {
         if(j == y) continue;
         QPoint point(x, j);
-        if(d->isMine(point)) continue;
+        if(!isOK(id, point)) continue;
         int count = d->chessNumberFromTo(point, p);
         if(0 == count)
         {
@@ -369,7 +369,7 @@ QList<QPoint> ChessRule::_pao(int id, const QPoint &p)
     {
         if(i == x) continue;
         QPoint point(i, y);
-        if(d->isMine(point)) continue;
+        if(!isOK(id, point)) continue;
         int count = d->chessNumberFromTo(point, p);
         if(0 == count)
         {
@@ -390,7 +390,7 @@ QList<QPoint> ChessRule::_pao(int id, const QPoint &p)
     {
         if(j == y) continue;
         QPoint point(x, j);
-        if(d->isMine(point)) continue;
+        if(!isOK(id, point)) continue;
         int count = d->chessNumberFromTo(point, p);
         if(0 == count)
         {
@@ -408,4 +408,12 @@ QList<QPoint> ChessRule::_pao(int id, const QPoint &p)
         }
     }
     return pl;
+}
+
+bool ChessRule::isOK(int fid, const QPoint &go) const
+{
+    int tid = ChessData::instance()->isWho(go);
+    if((tid < 0) || (tid == EMPTY_CHESS)) return true;
+    if(fid <= 15) return (tid>=16);
+    else return (tid<=15);
 }

@@ -19,6 +19,8 @@ private:
     static ChessRule *INSTANCE;
     explicit ChessRule();
 
+    bool isOK(int fid, const QPoint &go) const;
+
     QList<QPoint> red_shuai(int id, const QPoint &p);
     QList<QPoint> red_shi(int id, const QPoint &p);
     QList<QPoint> red_xiang(int id, const QPoint &p);

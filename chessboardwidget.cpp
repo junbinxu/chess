@@ -66,6 +66,7 @@ void  ChessBoardWidget::makeImageCache()
     QString id;
     for(int i=0; i<=34; ++i)
     {
+        if(i == 32) continue;
         id = QString::number(i);
         QPixmapCache::insert(id, QPixmap(":/image/"+id+".png"));
     }
@@ -150,6 +151,7 @@ void ChessBoardWidget::paintBoard(QPainter &painter)
         if(pixmap.load(":/image/"+key+".png"))
         {
             Chess_Info("load image from resource success: "+key);
+            QPixmapCache::insert(key, pixmap);
         }
         else
         {
@@ -174,15 +176,17 @@ void ChessBoardWidget::paintChesses(QPainter &painter)
     QString key;
     for(int i=0; i<32; ++i)
     {
+        key = QString::number(i);
+        pixmap = QPixmap();
         if(d->isLive(i, &point))
         {
-            key = QString::number(i);
             if(!QPixmapCache::find(key, &pixmap))
             {
                 Chess_Error("can not load image from cache: "+key);
                 if(pixmap.load(":/image/"+key+".png"))
                 {
                     Chess_Info("load image from resource success: "+key);
+                    QPixmapCache::insert(key, pixmap);
                 }
                 else
                 {
@@ -199,6 +203,16 @@ void ChessBoardWidget::paintChesses(QPainter &painter)
             QRectF source(0.0, 0.0, pixmap.width(), pixmap.height());
             painter.drawPixmap(target, pixmap, source);
         }
+        /*
+        else
+        {
+            if(QPixmapCache::find(key, &pixmap))
+            {
+                QPixmapCache::remove(key);
+                Chess_Info("remove image in the cache: "+key);
+            }
+        }
+        */
     }
 }
 

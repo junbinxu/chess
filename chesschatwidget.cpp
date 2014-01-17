@@ -1,6 +1,7 @@
 #include "chesschatwidget.h"
 #include "chesslog.h"
 #include "chessinformation.h"
+#include "chessprotocol.h"
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
@@ -45,12 +46,18 @@ ChessChatWidget::ChessChatWidget(QWidget *parent) :
     layout->addLayout(lay1);
     setLayout(layout);
 
-    connect(sendPushButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+
 
     ChessType chessType = ChessInformation::instance()->getChessType();
     if((ReplayType == chessType) || (AIType == chessType))
     {
         setDisabled(true);
+    }
+    else
+    {
+        connect(sendPushButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+        connect(ChessProtocol::instance(), SIGNAL(receiveChatMessage(QString)),
+                this, SLOT(receiveMessage(QString)));
     }
 
     Chess_Trace(tr("new ChessChatWidget"));
@@ -66,14 +73,14 @@ void ChessChatWidget::sendMessage()
     QString message = inputLineEdit->text().trimmed();
     if(message.isEmpty()) return;
     if(message.size() > maxLength) return;
-    emit send(message);
+    ChessProtocol::instance()->sendChatMessage(toUtf8(message));
     inputLineEdit->clear();
     showMessage(true, message);
 }
 
 void ChessChatWidget::receiveMessage(const QString &msg)
 {
-    showMessage(false, msg);
+    showMessage(false, fromUtf8(msg));
 }
 
 void ChessChatWidget::showMessage(bool isMe, const QString &msg)
@@ -102,4 +109,35 @@ void ChessChatWidget::keyPressEvent(QKeyEvent *e)
         return sendMessage();
     }
     return QWidget::keyPressEvent(e);
+}
+
+QString ChessChatWidget::toUtf8(const QString &msg) const
+{
+    if(msg.isEmpty()) return QString();
+    QByteArray ba = msg.toUtf8();
+    int size = ba.size();
+    QString out;
+    for(int i=0; i<size; ++i)
+    {
+        quint8 c = ba.at(i);
+        uint num = c;
+        QString utf8 = "_" +  QString::number(num, 16).toUpper();
+        out.append(utf8);
+    }
+    return out;
+}
+
+QString ChessChatWidget::fromUtf8(const QString &utf8) const
+{
+    QStringList sl = utf8.split(QChar('_'), QString::SkipEmptyParts);
+    int sl_size = sl.size();
+    char *buf = new char[sl_size+1];
+    for(int i=0; i<sl_size; ++i)
+    {
+        buf[i] = (char)(sl.at(i).toUShort(0, 16));
+    }
+    buf[sl_size] = '\0';
+    QString out = QString::fromUtf8(buf);
+    delete []buf;
+    return out;
 }

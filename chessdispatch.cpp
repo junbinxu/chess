@@ -5,6 +5,7 @@
 #include "chessaicontrol.h"
 #include "chessinformation.h"
 #include "chesslog.h"
+#include "chessprotocol.h"
 
 ChessDispatch * ChessDispatch::INSTANCE = 0;
 
@@ -51,17 +52,6 @@ void ChessDispatch::send(const QString &message)
 
 void ChessDispatch::receive(const QString &message)
 {
-    Q_UNUSED(message);
+    Chess_Info("receive: "+message);
+    ChessProtocol::instance()->receiveMessage(message);
 }
-
-
-
-
-
-
-
-
-
-
-
-
