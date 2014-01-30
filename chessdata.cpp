@@ -23,6 +23,12 @@ const int ChessData::chessInitPos[32][2] =
     {5, 0}, {2, 0}, {6, 0}, {0, 3}, {2, 3}, {4, 3}, {6, 3}, {8, 3}
 };
 
+const char ChessData::chessName[32] =
+{
+    'K', 'R', 'R', 'N', 'N', 'C', 'C', 'A', 'A', 'B', 'B', 'P', 'P', 'P', 'P', 'P',
+    'k', 'r', 'r', 'n', 'n', 'c', 'c', 'a', 'a', 'b', 'b', 'p', 'p', 'p', 'p', 'p',
+};
+
 ChessData::ChessData()
 {
     init();
@@ -119,4 +125,45 @@ int ChessData::chessNumberFromTo(const QPoint &f, const QPoint &t)
         return count;
     }
     else return -1;
+}
+
+QString ChessData::boardMap() const
+{
+    QString board;
+
+    for(int i=0; i<=9; ++i)
+    {
+        int t = 0;
+        for(int j=0; j<=8; ++j)
+        {
+            int index = isWho(QPoint(j, i));
+            if((index < 0) || (index > 31))
+            {
+                ++t;
+                if((j == 8) && (t != 0))
+                {
+                    board.append(QString::number(t));
+                }
+            }
+            else
+            {
+                if(0 == t)
+                {
+                    board.append(chessName[index]);
+                }
+                else
+                {
+                    board.append(QString::number(t));
+                    board.append(chessName[index]);
+                    t = 0;
+                }
+            }
+        }
+        if(i <= 8)
+        {
+            board.append('/');
+        }
+    }
+
+    return board;
 }

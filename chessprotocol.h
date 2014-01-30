@@ -14,18 +14,25 @@ public:
     static ChessProtocol *instance();
     ~ChessProtocol();
     void sendChatMessage(const QString &msg);
-    void sendChessMessgae(int fid, int tid, const QPoint &from, const QPoint &to);
+    void sendChessMessgae(int fid, int tid, const QPoint &from,
+                          const QPoint &to, const QString &boardMap,
+                          bool isBlackTurn, int count);
     void receiveMessage(const QString &msg);
+    void sendStartMessage();
+    void sendExitMessage();
+    QString makeMessage(const QString &type, const QString &msg) const;
+    QHash<QString, QString> analyse(const QString &msg);
 
 signals:
     void receiveChatMessage(const QString &msg);
     void receiveChessMessage(int fid, int tid, const QPoint &from, const QPoint &to);
+    void receiveStartMessage();
 
 private:
     static ChessProtocol *INSTANCE;
     explicit ChessProtocol(QObject *parent=0);
 
-    QString makeMessage(const QString &type, const QString &msg) const;
+
 
     QString makeChessMessage(int fid, int tid, const QPoint &from, const QPoint &to) const;
 
@@ -33,7 +40,7 @@ private:
     QString chessType(const QString &type) const;
     QString chessMessage(const QString &msg) const;
 
-    static const QString KEY[3];
+    static const QString KEY[6];
 
     QSet<QString> keySet;
 };

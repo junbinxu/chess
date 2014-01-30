@@ -56,6 +56,8 @@ public:
 
     int chessNumberFromTo(const QPoint &f, const QPoint &t);
 
+    QString boardMap() const;
+
 private:
     static ChessData *INSTANCE;
     explicit ChessData();
@@ -72,6 +74,8 @@ private:
     QList<QPoint> choicePoints;
 
     static const int chessInitPos[32][2];
+
+    static const char chessName[32];
 };
 
 #endif // CHESSDATA_H

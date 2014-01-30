@@ -17,11 +17,15 @@ public:
     void selectEmpty(const QPoint &to);
     void selectChess(int id, const QPoint &p);
 
+    void startGame();
+    void exitGame();
+
 
 signals:
 
 public slots:
     void receiveChessMessage(int fid, int tid, const QPoint &from, const QPoint &to);
+    void receiveStartMessgae();
 
 private:
     static ChessCore *INSTANCE;
@@ -38,6 +42,7 @@ private:
     bool thisReady;
     bool thatReady;
 
+    int count;
 };
 
 #endif // CHESSCORE_H

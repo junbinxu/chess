@@ -57,6 +57,7 @@ void ChessServer::newConnect()
 
 void ChessServer::read()
 {
+    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     receive(QString(socket->readAll()));
 }
 

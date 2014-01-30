@@ -23,6 +23,8 @@ ChessCore::ChessCore(QObject *parent) :
     init();
     connect(ChessProtocol::instance(), SIGNAL(receiveChessMessage(int,int,QPoint,QPoint)),
             this, SLOT(receiveChessMessage(int,int,QPoint,QPoint)));
+    connect(ChessProtocol::instance(), SIGNAL(receiveStartMessage()),
+            this, SLOT(receiveStartMessgae()));
     Chess_Trace(tr("new ChessCore"));
 }
 
@@ -38,10 +40,12 @@ void ChessCore::init()
     thisReady = false;
     thatReady = false;
 
+    count = 0;
 }
 
 void ChessCore::selectEmpty(const QPoint &to)
 {
+    if(!(thisReady && thatReady)) return;
     if(!thisTurn)
     {
         Chess_Info("not my turn");
@@ -68,6 +72,7 @@ void ChessCore::selectEmpty(const QPoint &to)
 
 void ChessCore::selectChess(int id, const QPoint &p)
 {
+    if(!(thisReady && thatReady)) return;
     if(!thisTurn)
     {
         Chess_Info("not my turn");
@@ -95,19 +100,29 @@ void ChessCore::selectChess(int id, const QPoint &p)
 void ChessCore::_moveChess(int fid, const QPoint &to)
 {
     ChessData *d = ChessData::instance();
-    ChessProtocol::instance()->sendChessMessgae(fid, EMPTY_CHESS, d->getPos(fid), to);
+    QPoint from = d->getPos(fid);
     d->moveChess(fid, to);
     lastSelected = false;
     thisTurn = false;
+    bool isBlackTurn = ChessInformation::instance()->isRed();
+    QString boardMap = d->boardMap();
+    qDebug() << boardMap;
+    ChessProtocol::instance()->sendChessMessgae(fid, EMPTY_CHESS, from, to, boardMap, isBlackTurn, count);
+    ++count;
 }
 
 void ChessCore::_eatChess(int fid, int tid, const QPoint &to)
 {
     ChessData *d = ChessData::instance();
-    ChessProtocol::instance()->sendChessMessgae(fid, tid, d->getPos(fid), to);
+    QPoint from = d->getPos(fid);
     d->eatChess(fid, tid, to);
     lastSelected = false;
     thisTurn = false;
+    bool isBlackTurn = ChessInformation::instance()->isRed();
+    QString boardMap = d->boardMap();
+    qDebug() << boardMap;
+    ChessProtocol::instance()->sendChessMessgae(fid, tid, from, to, boardMap, isBlackTurn, count);
+    ++count;
 }
 
 void ChessCore::_selectMyChess(int id, const QPoint &p)
@@ -131,7 +146,7 @@ void ChessCore::receiveChessMessage(int fid, int tid, const QPoint &from, const 
         return;
     }
     ChessData *d = ChessData::instance();
-    if(EMPTY_CHESS == tid)
+    if((tid<0)||(tid>31))
     {
         d->moveChess(fid, to);
     }
@@ -142,3 +157,26 @@ void ChessCore::receiveChessMessage(int fid, int tid, const QPoint &from, const 
     thisTurn = true;
     ChessBoardWidget::instance()->update();
 }
+
+void ChessCore::startGame()
+{
+    thisReady = true;
+    ChessProtocol::instance()->sendStartMessage();
+}
+
+void ChessCore::exitGame()
+{
+    ChessProtocol::instance()->sendExitMessage();
+}
+
+void ChessCore::receiveStartMessgae()
+{
+    thatReady = true;
+}
+
+
+
+
+
+
+

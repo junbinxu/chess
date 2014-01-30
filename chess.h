@@ -28,6 +28,9 @@ public slots:
     void changeGame();
     void saveGame();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     static Chess *INSTANCE;
     explicit Chess(QWidget *parent = 0);

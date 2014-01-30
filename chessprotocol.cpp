@@ -1,5 +1,6 @@
 #include "chessprotocol.h"
 #include "chesslog.h"
+#include "chessdata.h"
 #include "chessdispatch.h"
 #include <QObject>
 #include <QDateTime>
@@ -17,14 +18,14 @@ ChessProtocol * ChessProtocol::instance()
     return INSTANCE;
 }
 
-const QString ChessProtocol::KEY[3] =
+const QString ChessProtocol::KEY[6] =
 {
-    "TIME", "TYPE", "BODY"
+    "TIME", "TYPE", "BODY", "ELEEYE", "TURN", "COUNT"
 };
 
 ChessProtocol::ChessProtocol(QObject *parent): QObject(parent)
 {
-    for(int i=0; i<3; ++i)
+    for(int i=0; i<6; ++i)
     {
         keySet.insert(KEY[i]);
     }
@@ -65,11 +66,12 @@ QString ChessProtocol::chessMessage(const QString &msg) const
     return ("-BODY " + msg);
 }
 
-void ChessProtocol::receiveMessage(const QString &msg)
+QHash<QString, QString> ChessProtocol::analyse(const QString &msg)
 {
-    if(msg.isEmpty()) return;
-    QStringList sl = msg.split(QChar('-'), QString::SkipEmptyParts);
     QHash<QString, QString> hash;
+    if(msg.isEmpty()) return hash;
+    QStringList sl = msg.split(QChar('-'), QString::SkipEmptyParts);
+    //qDebug() << sl;
     int size = sl.size();
     for(int i=0; i<size; ++i)
     {
@@ -85,6 +87,12 @@ void ChessProtocol::receiveMessage(const QString &msg)
             }
         }
     }
+    return hash;
+}
+
+void ChessProtocol::receiveMessage(const QString &msg)
+{
+    QHash<QString, QString> hash = analyse(msg);
     qDebug() << hash;
     if(!hash.contains("TYPE"))
     {
@@ -99,13 +107,37 @@ void ChessProtocol::receiveMessage(const QString &msg)
     }
     else if(type == "CHESS")
     {
-        int fid = body.mid(0, 2).toInt();
-        int fx = body.mid(2, 1).toInt();
-        int fy = body.mid(3, 1).toInt();
-        int tid = body.mid(4, 2).toInt();
-        int tx = body.mid(6, 1).toInt();
-        int ty = body.mid(7, 1).toInt();
+        int fid = -1;
+        int fx = -1;
+        int fy = -1;
+        int tid = -1;
+        int tx = -1;
+        int ty = -1;
+        if(body.size() == 8)
+        {
+        fid = body.mid(0, 2).toInt();
+        fx = body.mid(2, 1).toInt();
+        fy = body.mid(3, 1).toInt();
+        tid = body.mid(4, 2).toInt();
+        tx = body.mid(6, 1).toInt();
+        ty = body.mid(7, 1).toInt();
+
+        }
+        else if(body.size() == 4)
+        {
+            body = body.toLower();
+            fx = body.at(0).toAscii() - 'a';
+            fy = 9 - (body.at(1).toAscii() - '0');
+            fid = ChessData::instance()->isWho(QPoint(fx, fy));
+            tx = body.at(2).toAscii() - 'a';
+            ty = 9 - (body.at(3).toAscii() - '0');
+            tid = ChessData::instance()->isWho(QPoint(tx, ty));
+        }
         emit receiveChessMessage(fid, tid, QPoint(fx, fy), QPoint(tx, ty));
+    }
+    else if(type == "START")
+    {
+        emit receiveStartMessage();
     }
     else
     {
@@ -113,10 +145,14 @@ void ChessProtocol::receiveMessage(const QString &msg)
     }
 }
 
-void ChessProtocol::sendChessMessgae(int fid, int tid, const QPoint &from, const QPoint &to)
+void ChessProtocol::sendChessMessgae(int fid, int tid, const QPoint &from, const QPoint &to, const QString &boardMap, bool isBlackTurn, int count)
 {
     QString msg = makeChessMessage(fid, tid, from, to);
-    ChessDispatch::instance()->send(makeMessage(QLatin1String("CHESS"), msg));
+    QString data = makeMessage(QLatin1String("CHESS"), msg);
+    char turn = isBlackTurn ? 'b' : 'w';
+    QString engine = QString(" -ELEEYE %1 -TURN %2 -COUNT %3").arg(boardMap).arg(turn).arg(count);
+    data.append(engine);
+    ChessDispatch::instance()->send(data);
 }
 
 QString ChessProtocol::makeChessMessage(int fid, int tid, const QPoint &from, const QPoint &to) const
@@ -134,3 +170,26 @@ QString ChessProtocol::makeChessMessage(int fid, int tid, const QPoint &from, co
             .arg(to.x())
             .arg(to.y());
 }
+
+void ChessProtocol::sendStartMessage()
+{
+    ChessDispatch::instance()->send(makeMessage("START", "HELLO"));
+}
+
+void ChessProtocol::sendExitMessage()
+{
+    ChessDispatch::instance()->send(makeMessage("EXIT", "BYE"));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

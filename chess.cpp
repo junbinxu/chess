@@ -17,6 +17,7 @@
 #include <QToolBar>
 #include <QAction>
 #include <QMessageBox>
+#include <QTimer>
 
 Chess * Chess::INSTANCE = 0;
 
@@ -68,6 +69,11 @@ Chess::~Chess()
     Chess_Trace(tr("delete Chess"));
 }
 
+void Chess::closeEvent(QCloseEvent *event)
+{
+    exitGame();
+}
+
 void Chess::initActions()
 {
     // 关于 Qt
@@ -78,19 +84,19 @@ void Chess::initActions()
     connect(aboutChineseChessAction, SIGNAL(triggered()),
             ChessVersionDialog::instance(), SLOT(show()));
 
-    newGameAction = new QAction(QString::fromUtf8("new"), this);
+    newGameAction = new QAction(QString::fromUtf8("\xE6\x96\xB0\xE5\xBB\xBA"), this);
     connect(newGameAction, SIGNAL(triggered()), this, SLOT(newGame()));
 
-    startGameAction = new QAction(QString::fromUtf8("start"), this);
+    startGameAction = new QAction(QString::fromUtf8("\xE5\xBC\x80\xE5\xA7\x8B"), this);
     connect(startGameAction, SIGNAL(triggered()), this, SLOT(startGame()));
 
-    changeGameAction = new QAction(QString::fromUtf8("change"), this);
+    changeGameAction = new QAction(QString::fromUtf8("\xE4\xBA\xA4\xE6\x8D\xA2"), this);
     connect(changeGameAction, SIGNAL(triggered()), this, SLOT(changeGame()));
 
-    exitGameAction = new QAction(QString::fromUtf8("exit"), this);
+    exitGameAction = new QAction(QString::fromUtf8("\xE9\x80\x80\xE5\x87\xBA"), this);
     connect(exitGameAction, SIGNAL(triggered()), this, SLOT(exitGame()));
 
-    saveGameAction = new QAction(QString::fromUtf8("save"), this);
+    saveGameAction = new QAction(QString::fromUtf8("\xE4\xBF\x9D\xE5\xAD\x98"), this);
     connect(saveGameAction, SIGNAL(triggered()), this, SLOT(saveGame()));
 }
 
@@ -128,12 +134,13 @@ void Chess::newGame()
 
 void Chess::startGame()
 {
-
+    ChessCore::instance()->startGame();
 }
 
 void Chess::exitGame()
 {
-    close();
+    ChessCore::instance()->exitGame();
+    QTimer::singleShot(1000, this, SLOT(close()));
 }
 
 void Chess::changeGame()

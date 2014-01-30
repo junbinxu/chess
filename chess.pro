@@ -31,7 +31,9 @@ SOURCES += \
     chessselectionwidget.cpp \
     chessprotocol.cpp \
     chessversion.cpp \
-    chessversiondialog.cpp
+    chessversiondialog.cpp \
+    chessengine.cpp \
+    chessengineeleeye.cpp
 
 HEADERS += \
     chessdefine.h \
@@ -59,7 +61,9 @@ HEADERS += \
     chessselectionwidget.h \
     chessprotocol.h \
     chessversion.h \
-    chessversiondialog.h
+    chessversiondialog.h \
+    chessengine.h \
+    chessengineeleeye.h
 
 RESOURCES += \
     chess.qrc

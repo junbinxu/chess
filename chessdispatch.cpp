@@ -47,6 +47,7 @@ bool ChessDispatch::isValid()
 
 void ChessDispatch::send(const QString &message)
 {
+    Chess_Info("send: "+message);
     if(chessOpposition) chessOpposition->send(message);
 }
 
