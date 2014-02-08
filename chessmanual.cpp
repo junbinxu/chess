@@ -103,6 +103,7 @@ void ChessManual::saveChessManual()
 
 void ChessManual::writeSetup(int i)
 {
+    Q_UNUSED(i);
     //writer.writeStartElement(QLatin1String("setup"));
     //writer.writeAttribute(QLatin1String("id"), QString::number(i));
     //writer.writeEndElement();
