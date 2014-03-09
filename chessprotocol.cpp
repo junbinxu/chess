@@ -126,11 +126,19 @@ void ChessProtocol::receiveMessage(const QString &msg)
         else if(body.size() == 4)
         {
             body = body.toLower();
-            fx = body.at(0).toAscii() - 'a';
-            fy = 9 - (body.at(1).toAscii() - '0');
+
+//            fx = body.at(0).toAscii() - 'a';
+//            fy = 9 - (body.at(1).toAscii() - '0');
+//            fid = ChessData::instance()->isWho(QPoint(fx, fy));
+//            tx = body.at(2).toAscii() - 'a';
+//            ty = 9 - (body.at(3).toAscii() - '0');
+
+            fx = body.at(0).toLatin1() - 'a';
+            fy = 9 - (body.at(1).toLatin1() - '0');
             fid = ChessData::instance()->isWho(QPoint(fx, fy));
-            tx = body.at(2).toAscii() - 'a';
-            ty = 9 - (body.at(3).toAscii() - '0');
+            tx = body.at(2).toLatin1() - 'a';
+            ty = 9 - (body.at(3).toLatin1() - '0');
+
             tid = ChessData::instance()->isWho(QPoint(tx, ty));
         }
         emit receiveChessMessage(fid, tid, QPoint(fx, fy), QPoint(tx, ty));
